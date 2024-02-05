@@ -1,2 +1,5 @@
 
 .DS_Store
+
+# Jay application.properties
+*.properties
