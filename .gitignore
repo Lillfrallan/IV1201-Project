@@ -1,6 +1,6 @@
 
 .DS_Store
 *.properties
-/src/main/resources/*
+/src/main/resources/application.properties*
 
 
