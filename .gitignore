@@ -1,5 +1,8 @@
-src/main/resources/application.properties
 .DS_Store
 
 # Jay application.properties
 *.properties
+/src/main/resources/*
+/src/main/resources/application.properties
+
+*.class
