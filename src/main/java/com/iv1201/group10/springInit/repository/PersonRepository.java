@@ -1,2 +1,12 @@
-package com.iv1201.group10.springInit.repository;public interface PersonRepository {
+package com.iv1201.group10.springInit.repository;
+
+import com.iv1201.group10.springInit.entity.Person;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PersonRepository extends JpaRepository<Person, String> {
+
+    public Person findByEmail(String email);
+
+    public Person findByUsername(String username);
+
 }
