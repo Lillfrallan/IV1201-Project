@@ -1,0 +1,57 @@
+<html
+        xmlns:th="http://thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<head>
+    <title>Register</title>
+</head>
+<section layout:fragment="body">
+
+    <div class="register-form">
+        <form th:action="@{/register}" th:object="${person}" method="post">
+            <table>
+                <thead>
+                <tr>
+                    <td><h2>Register</h2></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input type="text" th:field="*{name}" placeholder="First name" required /></td>
+                </tr>
+                <tr>
+                    <td><input type="text" th:field="*{surname}" placeholder="Last name" required /></td>
+                </tr>
+                <tr th:if="${errorMsg != null and fieldName == 'pnr'}">
+                    <td th:text="${errorMsg}" class="error-message"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" th:field="*{pnr}" placeholder="Personal number" required /></td>
+                </tr>
+                <tr th:if="${errorMsg != null and fieldName == 'email'}">
+                    <td th:text="${errorMsg}" class="error-message"></td>
+                </tr>
+                <tr>
+                    <td><input type="email" th:field="*{email}" placeholder="Email" required /></td>
+                </tr>
+                <tr th:if="${errorMsg != null and fieldName == 'username'}">
+                    <td th:text="${errorMsg}" class="error-message"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" th:field="*{username}" placeholder="Username" required /></td>
+                </tr>
+                <tr>
+                    <td><input type="password" th:field="*{password}" placeholder="Password" required /></td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+                <tr>
+                    <td><a href="/login">Login to excisting account.</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</section>
+</html>

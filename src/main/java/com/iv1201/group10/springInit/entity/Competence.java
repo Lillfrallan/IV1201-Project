@@ -15,11 +15,12 @@ public class Competence {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "competence_id")
     private String id;
 
+    @Column(name = "name")
     private String name;
 
-    public Competence(){
-
+    public Competence() {
     }
 }

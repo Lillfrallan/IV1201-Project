@@ -1,6 +1,5 @@
 package com.iv1201.group10.springInit.entity;
-import java.util.Collection;
-import java.util.Collections;
+
 
 
 import jakarta.persistence.*;
@@ -10,28 +9,42 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
-@Setter
-@Getter
+
 @Entity
 @Data
-/***
- * Person entity for the person database table
+@Getter
+@Setter
+
+/**
+ * Represents a person entity in the application.
+ * This class maps to the person table in the database.
  */
 public class Person {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
+
+    @Column(name = "person_id")
     private String id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "pnr")
     private String pnr;
 
-    public Person(){
-
-    }
+    public Person(){}
 
 }
