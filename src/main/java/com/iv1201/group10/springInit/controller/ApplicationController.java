@@ -26,6 +26,7 @@ public class ApplicationController {
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("person", new Person());
+        System.out.println("Controller method called!");
         return "register";
     }
 
@@ -54,12 +55,12 @@ public class ApplicationController {
      * The login form has been submitted.
      * Spring security will override what view is returned based of the context.
      * @return Home page URL.
-     */
+     *//**
     @PostMapping("/login")
     public String retriveLoginPage() {
         return "redirect:/index";
     }
-
+*/
    /** @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("person", new Person());
