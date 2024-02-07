@@ -21,11 +21,10 @@ import org.hibernate.annotations.GenericGenerator;
  */
 public class Person {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "person_id")
-    private String id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -44,6 +43,9 @@ public class Person {
 
     @Column(name = "pnr")
     private String pnr;
+
+    @Column(name = "role_id")
+    private Integer roleId;
 
     public Person(){}
 

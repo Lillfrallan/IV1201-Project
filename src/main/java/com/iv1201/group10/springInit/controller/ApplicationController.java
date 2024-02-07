@@ -55,12 +55,12 @@ public class ApplicationController {
      * The login form has been submitted.
      * Spring security will override what view is returned based of the context.
      * @return Home page URL.
-     *//**
+     */
     @PostMapping("/login")
     public String retriveLoginPage() {
         return "redirect:/index";
     }
-*/
+
    /** @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("person", new Person());

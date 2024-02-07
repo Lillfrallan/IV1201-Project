@@ -17,11 +17,10 @@ import lombok.Setter;
  */
 public class CompetenceProfile {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "competence_profile_id")
-    private String id;
+    private Integer id;
 
     @ManyToOne // Many CompetenceProfiles can belong to one Person
     @JoinColumn(name = "person_id")

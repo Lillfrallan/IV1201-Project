@@ -1,5 +1,6 @@
 package com.iv1201.group10.springInit.Service;
 
+import com.iv1201.group10.springInit.entity.Role;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +33,8 @@ public class RegistrationService implements UserDetailsService {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         person.setPassword(encoder.encode(person.getPassword()));
+
+        person.setRoleId(2);
 
         personRepository.save(person);
         return person;

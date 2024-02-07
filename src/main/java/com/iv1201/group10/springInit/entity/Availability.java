@@ -12,10 +12,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 public class Availability {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "availability_id")
-    private String id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "person_id")

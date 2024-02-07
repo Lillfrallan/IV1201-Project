@@ -13,10 +13,10 @@ import org.hibernate.annotations.GenericGenerator;
 public class Competence {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "competence_id")
-    private String id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
