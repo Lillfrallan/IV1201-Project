@@ -26,3 +26,4 @@ public class UserAlreadyExistException extends AuthenticationException {
         return fieldName;
     }
 }
+

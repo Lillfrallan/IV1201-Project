@@ -1,12 +1,18 @@
-<html
-        xmlns:th="http://thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-        layout:decorate="~{style}">
+<!-- src/main/resources/templates/register.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link rel="stylesheet" th:href="@{/static.css/styles.css}" />
 </head>
-<section layout:fragment="body">
+<body>
+<header th:replace="fragments/header "></header>
 
+
+<section layout:fragment="body">
     <div class="register-form">
         <form th:action="@{/register}" th:object="${person}" method="post">
             <table>
@@ -14,6 +20,7 @@
                 <tr>
                     <td><h2>Register</h2></td>
                 </tr>
+
                 </thead>
                 <tbody>
                 <tr>
@@ -38,6 +45,7 @@
                     <td th:text="${errorMsg}" class="error-message"></td>
                 </tr>
                 <tr>
+
                     <td><input type="text" th:field="*{username}" placeholder="Username" required /></td>
                 </tr>
                 <tr>
@@ -54,4 +62,5 @@
         </form>
     </div>
 </section>
+</body>
 </html>

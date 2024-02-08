@@ -1,8 +1,0 @@
-<nav th:fragment="navbar">
-
-        <div class="user" th:if="${#authorization.expression('isAuthenticated()')}">
-                <span th:text="${#authentication.name}"></span>
-                <span th:if="${#authorization.expression('hasAuthority(''recruiter'')')}" th:text="${#authentication.getPrincipal().getAuthorities()[0]}"></span>
-                <a href="/logout">Logout</a>
-        </div>
-</nav>
