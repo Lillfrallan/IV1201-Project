@@ -1,15 +1,12 @@
 package com.iv1201.group10.springInit.Config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
@@ -38,8 +35,6 @@ public class Thymeleaf implements WebMvcConfigurer, ApplicationContextAware {
         SpringTemplateEngine temp = new SpringTemplateEngine();
         temp.setTemplateResolver(templateResolver());
         temp.setEnableSpringELCompiler(true);
-
-        temp.addDialect(new SpringSecurityDialect()); // add Spring Security dialect
         return temp;
     }
     /**
