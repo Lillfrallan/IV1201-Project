@@ -12,15 +12,20 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 public class Availability {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "availability_id")
+    private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
-    private String from_date;
-    private String to_date;
+    @Column(name = "from_date")
+    private String fromDate;
 
-    public Availability(){
+    @Column(name = "to_date")
+    private String toDate;
 
+    public Availability() {
     }
 }

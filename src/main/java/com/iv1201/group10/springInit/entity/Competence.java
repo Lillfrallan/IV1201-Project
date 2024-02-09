@@ -13,13 +13,14 @@ import org.hibernate.annotations.GenericGenerator;
 public class Competence {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Column(name = "competence_id")
+    private Integer id;
+
+    @Column(name = "name")
     private String name;
 
-    public Competence(){
-
+    public Competence() {
     }
 }

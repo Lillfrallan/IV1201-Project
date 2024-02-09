@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.FluentQuery;
 import java.util.Optional;
 import java.util.function.Function;
 
-public interface AvailabilityRepository extends JpaRepository<Availability, String> {
+public interface AvailabilityRepository extends JpaRepository<Availability, Integer> {
 
 }
