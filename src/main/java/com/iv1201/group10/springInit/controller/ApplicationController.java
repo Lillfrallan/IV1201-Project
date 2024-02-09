@@ -2,7 +2,6 @@ package com.iv1201.group10.springInit.controller;
 
 import javax.validation.Valid;
 
-//import com.iv1201.group10.springInit.Service.LoginService;
 import com.iv1201.group10.springInit.Service.RegistrationService;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
@@ -20,8 +19,7 @@ public class ApplicationController {
 
     @Autowired
     private RegistrationService registrationService;
-  //  @Autowired
-   // private LoginService loginService;
+
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
@@ -57,29 +55,7 @@ public class ApplicationController {
      * @return Home page URL.
      */
     @PostMapping("/login")
-    public String retriveLoginPage() {
+    public String retrieveLoginPage() {
         return "redirect:/index";
     }
-
-   /** @GetMapping("/login")
-    public String showLoginPage(Model model) {
-        model.addAttribute("person", new Person());
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String processLogin(@ModelAttribute("person") @Valid Person person, BindingResult result) {
-        if (result.hasErrors()) {
-            return "login";
-        } else {
-            // Call loginService to handle login logic
-            boolean loginSuccessful = loginService.authenticateUser(person.getUsername(), person.getPassword());
-            if (loginSuccessful) {
-                return "redirect:/home"; // Redirect to the dashboard or home page
-            } else {
-                result.rejectValue("username", "error.loginForm", "Invalid username or password");
-                return "login";
-            }
-        }
-    }*/
 }
