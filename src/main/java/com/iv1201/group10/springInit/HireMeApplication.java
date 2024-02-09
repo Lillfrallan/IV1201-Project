@@ -10,4 +10,5 @@ public class HireMeApplication {
 		SpringApplication.run(HireMeApplication.class, args);
 	}
 
+
 }
