@@ -3,17 +3,29 @@ package com.iv1201.group10.springInit.Service;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService {
+public class LoginService implements UserDetailsService {
 
     @Autowired
     private PersonRepository personRepository;
 
-    public boolean authenticateUser(String username, String password) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person user = personRepository.findByUsername(username);
-
-        return password.matches(user.getPassword());
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return User.withUsername(user.getUsername())
+                .password(user.getPassword())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
     }
 }
