@@ -1,12 +1,11 @@
 package com.iv1201.group10.springInit.exceptions;
 
-import org.springframework.security.core.AuthenticationException;
 
 /**
  * Thrown during the registration process whenever the userdetails email, personal number or username
  * are not unique.
  */
-public class UserAlreadyExistException extends AuthenticationException {
+public class UserAlreadyExistException extends Exception {
     private final String fieldName;
 
     /**

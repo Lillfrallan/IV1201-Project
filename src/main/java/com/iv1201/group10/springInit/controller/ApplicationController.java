@@ -2,7 +2,6 @@ package com.iv1201.group10.springInit.controller;
 
 import javax.validation.Valid;
 
-//import com.iv1201.group10.springInit.Service.LoginService;
 import com.iv1201.group10.springInit.Service.RegistrationService;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
@@ -14,14 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 public class ApplicationController {
 
     @Autowired
     private RegistrationService registrationService;
-  //  @Autowired
-   // private LoginService loginService;
+
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
@@ -57,29 +54,14 @@ public class ApplicationController {
      * @return Home page URL.
      */
     @PostMapping("/login")
-    public String retriveLoginPage() {
-        return "redirect:/index";
-    }
-
-   /** @GetMapping("/login")
-    public String showLoginPage(Model model) {
-        model.addAttribute("person", new Person());
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String processLogin(@ModelAttribute("person") @Valid Person person, BindingResult result) {
-        if (result.hasErrors()) {
+    public String retrieveLoginPage(BindingResult result) {
+        if (result.hasErrors())
             return "login";
-        } else {
-            // Call loginService to handle login logic
-            boolean loginSuccessful = loginService.authenticateUser(person.getUsername(), person.getPassword());
-            if (loginSuccessful) {
-                return "redirect:/home"; // Redirect to the dashboard or home page
-            } else {
-                result.rejectValue("username", "error.loginForm", "Invalid username or password");
-                return "login";
-            }
-        }
-    }*/
+        return "redirect:/in";
+    }
+
+    @GetMapping("/in") //TODO Change path
+    public String getInPage() { //TODO Change name
+        return "in";
+    }
 }
