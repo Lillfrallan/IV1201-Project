@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.Valid;
 import java.util.List;
 
-
 @Controller
 public class ApplicationController {
 
@@ -60,8 +59,15 @@ public class ApplicationController {
      * @return Home page URL.
      */
     @PostMapping("/login")
-    public String retrieveLoginPage() {
-        return "redirect:/index";
+    public String retrieveLoginPage(BindingResult result) {
+        if (result.hasErrors())
+            return "login";
+        return "redirect:/in";
+    }
+
+    @GetMapping("/in") //TODO Change path
+    public String getInPage() { //TODO Change name
+        return "in";
     }
 
 
