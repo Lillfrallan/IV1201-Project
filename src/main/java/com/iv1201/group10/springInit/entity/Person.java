@@ -1,13 +1,10 @@
 package com.iv1201.group10.springInit.entity;
 
 
-
 import jakarta.persistence.*;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
@@ -24,7 +21,7 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "person_id")
-    private Integer id;
+    private Integer person_id;
 
     @Column(name = "name")
     private String name;
