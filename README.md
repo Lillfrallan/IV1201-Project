@@ -33,4 +33,4 @@
 
 <p><samp>The project includes detailed use cases for creating accounts, logging in, applying for positions, listing applications, and viewing application details.</samp></p>
 
-<p><samp><bold>Note:</bold> The project prioritizes addressing the tasks outlined in a provided document. While additional functionality is desirable, the primary goal is to deliver a stable, functional system within the given timeframe.</samp></p>
+<p><samp><b>Note:</b> The project prioritizes addressing the tasks outlined in a provided document. While additional functionality is desirable, the primary goal is to deliver a stable, functional system within the given timeframe.</samp></p>
