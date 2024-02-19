@@ -70,6 +70,11 @@ public class ApplicationController {
         return "in";
     }
 
+    @GetMapping("/admin") //TODO Change path
+    public String getAdminPage() { //TODO Change name
+        return "admin";
+    }
+
 
     @Autowired
     private RecruitmentService recruitmentService;
