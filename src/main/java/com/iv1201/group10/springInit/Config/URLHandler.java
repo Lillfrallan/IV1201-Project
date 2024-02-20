@@ -46,8 +46,8 @@ public class URLHandler implements AuthenticationSuccessHandler {
     protected String determineTargetUrl(final Authentication authentication) {
 
         Map<String, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put("ROLE_applicant", "/in");
-        roleTargetUrlMap.put("ROLE_recruiter", "/admin");
+        roleTargetUrlMap.put("ROLE_applicant", "/competence");
+        roleTargetUrlMap.put("ROLE_recruiter", "/recruiter");
         System.out.println(authentication.getAuthorities());
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -57,7 +57,6 @@ public class URLHandler implements AuthenticationSuccessHandler {
                 return roleTargetUrlMap.get(authorityName);
             }
         }
-        System.out.println("We're hopefully throwing an exception!!!");
         throw new IllegalStateException();
     }
 
