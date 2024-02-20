@@ -1,15 +1,23 @@
 package com.iv1201.group10.springInit.controller;
 
+
 import com.iv1201.group10.springInit.Service.RecruitmentService;
 import com.iv1201.group10.springInit.Service.RegistrationService;
 import com.iv1201.group10.springInit.entity.Competence;
+
+import com.iv1201.group10.springInit.entity.Competence;
+import com.iv1201.group10.springInit.Service.CompetenceService;
+import com.iv1201.group10.springInit.Service.CompetenceProfileService;
+
 import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
+import com.iv1201.group10.springInit.Service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,18 +25,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+
 
 @Controller
 public class ApplicationController {
 
     @Autowired
-    private RegistrationService registrationService;
+    private CompetenceService competenceService;
 
+    @Autowired
+    private CompetenceProfileService competenceProfileService;
+
+    @Autowired
+    private RegistrationService registrationService;
 
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("person", new Person());
-        System.out.println("Controller method called!");
         return "register";
     }
 
@@ -36,28 +50,17 @@ public class ApplicationController {
     public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result) throws UserAlreadyExistException {
         if (result.hasErrors()) {
             return "register";
-        }
-        else{
+        } else {
             registrationService.saveUser(person);
             return "redirect:/login";
         }
     }
 
-    /**
-     * Handles login request.
-     * @return The login view.
-     */
     @GetMapping("/login")
     public String serveLoginPage() {
         return "login";
     }
 
-
-    /**
-     * The login form has been submitted.
-     * Spring security will override what view is returned based of the context.
-     * @return Home page URL.
-     */
     @PostMapping("/login")
     public String retrieveLoginPage(BindingResult result) {
         if (result.hasErrors())
@@ -65,10 +68,11 @@ public class ApplicationController {
         return "redirect:/in";
     }
 
-    @GetMapping("/in") //TODO Change path
-    public String getInPage() { //TODO Change name
+    @GetMapping("/in")
+    public String getInPage() {
         return "in";
     }
+
 
     @GetMapping("/admin") //TODO Change path
     public String getAdminPage() { //TODO Change name
@@ -82,9 +86,10 @@ public class ApplicationController {
     /**
      * Handles the GET request to display the recruitment page with filters for competence and years of experience.
      * Retrieves a list of competences and competence profiles based on the provided filters (if any) and adds them to the model.
+     *
      * @param competenceId The ID of the selected competence (optional).
-     * @param years The years of experience (optional).
-     * @param model The model to which attributes will be added for rendering in the view.
+     * @param years        The years of experience (optional).
+     * @param model        The model to which attributes will be added for rendering in the view.
      * @return The name of the Thymeleaf template to be rendered for the recruitment page.
      */
     @GetMapping("/recruiter")
@@ -133,6 +138,73 @@ public class ApplicationController {
         // Return the name of the Thymeleaf template for rendering
         return "recruiter";
     }
+
+
+    @GetMapping("/competence")
+    public String showCompetenceForm(Model model) {
+        model.addAttribute("competence", new Competence());
+        return "competence";
+    }
+    @PostMapping("/competence")
+    public String saveCompetencies(@RequestParam("name") String competencyName, @RequestParam("experience") int yearsOfExperience) {
+        try {
+            // Validate input parameters
+            if (competencyName == null || competencyName.isEmpty() || yearsOfExperience <= 0) {
+                // Handle invalid input
+                return "redirect:/error";
+            }
+
+            // Log the received competency name and years of experience
+            System.out.println("Received competency name: " + competencyName);
+            System.out.println("Received years of experience: " + yearsOfExperience);
+
+            // Find the Competence object by name
+            Competence competence = competenceService.getCompetenceByName(competencyName)
+                    .orElse(null);
+
+            // Check if the Competence object exists
+            if (competence != null) {
+                // Log the found competence
+                System.out.println("Found competence: " + competence.getName());
+
+
+                // Create a new CompetenceProfile object
+                CompetenceProfile competenceProfile = new CompetenceProfile();
+
+                // Set the Competence object, years of experience, and Person object in the CompetenceProfile object
+                competenceProfile.setCompetence(competence);
+                competenceProfile.setYearsOfExperience(yearsOfExperience);
+
+
+                // Log the CompetenceProfile object before saving
+                System.out.println("CompetenceProfile before saving: " + competenceProfile);
+
+                // Save the CompetenceProfile object
+                competenceProfileService.saveCompetenceProfile(competenceProfile);
+
+                // Log a success message
+                System.out.println("CompetenceProfile saved successfully");
+
+                return "redirect:/in"; // Redirect to some page after saving competencies
+            } else {
+                // Handle the case where the Competence object is not found
+                // You can redirect to an error page or do something else
+                System.out.println("Competence not found");
+                return "redirect:/error"; // Redirect to an error page
+            }
+        } catch (Exception ex) {
+            // Handle unexpected exceptions
+            ex.printStackTrace();
+            return "redirect:/error"; // Redirect to an error page
+        }
+
+    }
+
+
+
+
+
+
 
 
 }
