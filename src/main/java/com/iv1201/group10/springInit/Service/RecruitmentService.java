@@ -6,9 +6,7 @@ import com.iv1201.group10.springInit.repository.CompetenceProfileRepository;
 import com.iv1201.group10.springInit.repository.CompetenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 
 @Service
 public class RecruitmentService {

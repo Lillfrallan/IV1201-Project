@@ -65,12 +65,6 @@ public class ApplicationController {
         return "redirect:/in";
     }
 
-    @GetMapping("/in") //TODO Change path
-    public String getInPage() { //TODO Change name
-        return "in";
-    }
-
-
     @Autowired
     private RecruitmentService recruitmentService;
 
