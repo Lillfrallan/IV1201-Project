@@ -62,15 +62,7 @@ public class ApplicationController {
     public String serveLoginPage() {
         return "login";
     }
-
-    @PostMapping("/login")
-    public String retrieveLoginPage(BindingResult result) {
-        if (result.hasErrors())
-            return "login";
-        return "redirect:/availability";
-    }
-
-
+    
     @Autowired
     private RecruitmentService recruitmentService;
 
