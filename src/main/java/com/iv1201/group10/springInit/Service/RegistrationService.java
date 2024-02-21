@@ -33,5 +33,4 @@ public class RegistrationService {
 
         personRepository.save(person);
     }
-
 }
