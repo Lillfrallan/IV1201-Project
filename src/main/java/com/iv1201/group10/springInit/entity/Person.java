@@ -5,6 +5,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import java.util.List;
+
+
+
 @Entity
 @Data
 @Getter
@@ -41,6 +47,8 @@ public class Person {
     @Column(name = "role_id")
     private Integer roleId;
 
+    @OneToMany(mappedBy = "person")
+    private List<CompetenceProfile> competenceProfiles;
     public Person(){}
 
 }
