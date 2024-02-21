@@ -20,7 +20,7 @@ public class Security {
                 (requests ->
                         requests.requestMatchers("/","/register").permitAll()
                                 .requestMatchers("/recruiter").hasRole("recruiter")
-                                .requestMatchers("/availability", "/ ").hasRole("applicant")
+                                .requestMatchers("/competence", "/availability").hasRole("applicant")
                                 .anyRequest().authenticated()))
                 .formLogin((form) ->
                         form.loginPage("/login").permitAll()
