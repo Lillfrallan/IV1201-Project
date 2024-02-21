@@ -9,6 +9,12 @@
 
 <div class="container mt-5">
     <h2>Select Competencies</h2>
+
+    <!-- Display success message if it exists -->
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
+        <strong th:text="${successMessage}"></strong>
+    </div>
+
     <form th:action="@{/competence}" method="POST">
         <div class="form-group">
             <label for="competency">Competency:</label>
@@ -24,6 +30,9 @@
             <input type="number" class="form-control" id="experience" name="experience" min="0">
         </div>
         <button type="submit" class="btn btn-primary">Add Competency</button>
+        <button type="submit" class="btn btn-primary">
+            <a href="/availability">To Availability</a>
+        </button>
     </form>
     <hr>
     <!-- Display selected competencies here if needed -->
