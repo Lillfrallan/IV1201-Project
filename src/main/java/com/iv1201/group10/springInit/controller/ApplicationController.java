@@ -3,17 +3,17 @@ package com.iv1201.group10.springInit.controller;
 
 import com.iv1201.group10.springInit.Service.RecruitmentService;
 import com.iv1201.group10.springInit.Service.RegistrationService;
-import com.iv1201.group10.springInit.entity.Competence;
+import com.iv1201.group10.springInit.entity.*;
 
 import com.iv1201.group10.springInit.entity.Competence;
 import com.iv1201.group10.springInit.Service.CompetenceService;
 import com.iv1201.group10.springInit.Service.CompetenceProfileService;
 
-import com.iv1201.group10.springInit.entity.CompetenceProfile;
-import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import com.iv1201.group10.springInit.Service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -135,59 +135,40 @@ public class ApplicationController {
         return "competence";
     }
     @PostMapping("/competence")
-    public String saveCompetencies(@RequestParam("name") String competencyName, @RequestParam("experience") int yearsOfExperience) {
+    public String saveCompetencies(@RequestParam("name") String competencyName,
+                                   @RequestParam("experience") int yearsOfExperience) {
         try {
-            // Validate input parameters
-            if (competencyName == null || competencyName.isEmpty() || yearsOfExperience <= 0) {
-                // Handle invalid input
-                return "redirect:/error";
-            }
+            // Retrieve the currently authenticated user's PersonPrincipal
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof PersonPrincipal) {
+                PersonPrincipal principal = (PersonPrincipal) authentication.getPrincipal();
+                Person loggedInPerson = principal.getPerson();
 
-            // Log the received competency name and years of experience
-            System.out.println("Received competency name: " + competencyName);
-            System.out.println("Received years of experience: " + yearsOfExperience);
-
-            // Find the Competence object by name
-            Competence competence = competenceService.getCompetenceByName(competencyName)
-                    .orElse(null);
-
-            // Check if the Competence object exists
-            if (competence != null) {
-                // Log the found competence
-                System.out.println("Found competence: " + competence.getName());
-
+                // Find the Competence object by name
+                Competence competence = competenceService.getCompetenceByName(competencyName).orElse(null);
 
                 // Create a new CompetenceProfile object
                 CompetenceProfile competenceProfile = new CompetenceProfile();
-
-                // Set the Competence object, years of experience, and Person object in the CompetenceProfile object
+                competenceProfile.setPerson(loggedInPerson);
                 competenceProfile.setCompetence(competence);
                 competenceProfile.setYearsOfExperience(yearsOfExperience);
-
-
-                // Log the CompetenceProfile object before saving
-                System.out.println("CompetenceProfile before saving: " + competenceProfile);
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
 
-                // Log a success message
-                System.out.println("CompetenceProfile saved successfully");
-
-                return "redirect:/in"; // Redirect to some page after saving competencies
+                // Redirect to a success page or another appropriate location
+                return "redirect:/success";
             } else {
-                // Handle the case where the Competence object is not found
-                // You can redirect to an error page or do something else
-                System.out.println("Competence not found");
-                return "redirect:/error"; // Redirect to an error page
+                // Handle the case where the user is not authenticated or the principal is not a PersonPrincipal
+                return "redirect:/error";
             }
         } catch (Exception ex) {
             // Handle unexpected exceptions
             ex.printStackTrace();
-            return "redirect:/error"; // Redirect to an error page
+            return "redirect:/error";
         }
-
     }
+
 
 
 
