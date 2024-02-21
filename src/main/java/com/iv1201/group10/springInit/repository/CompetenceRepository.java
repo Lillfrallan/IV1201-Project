@@ -4,9 +4,7 @@ import com.iv1201.group10.springInit.entity.Competence;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public interface CompetenceRepository extends JpaRepository<Competence, Integer> {
-    Optional<Competence> findByName(String name);
+
 }
