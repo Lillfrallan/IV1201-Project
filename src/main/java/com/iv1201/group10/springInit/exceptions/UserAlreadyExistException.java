@@ -2,7 +2,7 @@ package com.iv1201.group10.springInit.exceptions;
 
 
 /**
- * Thrown during the registration process whenever the userdetails email, personal number or username
+ * Thrown during the registration process whenever the user details email, personal number or username
  * are not unique.
  */
 public class UserAlreadyExistException extends Exception {
@@ -25,3 +25,4 @@ public class UserAlreadyExistException extends Exception {
         return fieldName;
     }
 }
+

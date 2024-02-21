@@ -1,10 +1,11 @@
 package com.iv1201.group10.springInit.entity;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
+
+import java.sql.Date;
 
 @Setter
 @Getter
@@ -18,14 +19,17 @@ public class Availability {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Person personId;
 
     @Column(name = "from_date")
-    private String fromDate;
+    private Date fromDate;
 
     @Column(name = "to_date")
-    private String toDate;
+    private Date toDate;
 
+    public void setPerson(Person personId) {
+    this.personId = personId;
+    }
     public Availability() {
     }
 }
