@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recruitment</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <!-- Header Section -->
+    <h1>Recruitment Page</h1>
+    <!-- Competences Section -->
+    <h2>Competences</h2>
+    <!-- Competences Form -->
+    <form th:action="@{/recruiter}" method="get">
+        <select name="competenceId" class="form-control">
+            <option value="">Select Competence</option>
+            <!-- Loop through competences -->
+            <option th:each="competence : ${competences}"
+                    th:value="${competence.competenceId}"
+                    th:text="${competence.name}"
+                    th:selected="${competence.competenceId == selectedCompetenceId}">
+            </option>
+        </select>
+        <!-- Hidden field for selected competence ID -->
+        <input type="hidden" th:if="${selectedCompetenceId}" th:attr="value=${selectedCompetenceId}" name="selectedCompetenceId" />
+        <br>
+        <!-- New filter for years of experience -->
+        <label for="years">Years of Experience:</label>
+        <select name="years" class="form-control">
+            <!-- Default option for any years -->
+            <option value="" th:selected="${selectedYears == null}">Any</option>
+            <!-- Options for specific years -->
+            <option value="1" th:selected="${selectedYears == 1}">1 Year(s)</option>
+            <option value="2" th:selected="${selectedYears == 2}">2 Year(s)</option>
+            <option value="3" th:selected="${selectedYears == 3}">3 Year(s)</option>
+            <!-- Add more options as needed -->
+        </select>
+        <br>
+        <!-- Submit button for filtering -->
+        <button type="submit" class="btn btn-primary mt-3">Filter Profiles</button>
+    </form>
+</div>
+
+<hr class="hr hr-blurry" />
+
+<!-- Display Competence Profiles -->
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <!-- Filtered Profiles Section -->
+    <h2>Filtered Profiles</h2>
+    <!-- Table for displaying profiles -->
+    <table class="table table-bordered table-sm table-hover">
+        <!-- Table header -->
+        <thead class="thead-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Competence</th>
+            <th>Years of Experience</th>
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <!-- Iterate through competence profiles -->
+        <tr th:each="competenceProfile: ${profiles}" >
+            <!-- Display profile details -->
+            <td><span th:text="${competenceProfile.person.name}"></span></td>
+            <td><span th:text="${competenceProfile.person.surname}"></span></td>
+            <td><span th:text="${competenceProfile.competence.name}"></span></td>
+            <td><span th:text="${competenceProfile.yearsOfExperience}"></span> year(s)</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr class="hr hr-blurry" />
+</body>
+</html>
