@@ -28,7 +28,7 @@ public class Availability {
     private Date toDate;
 
     public void setPerson(Person personId) {
-    this.personId =personId;
+    this.personId = personId;
     }
     public Availability() {
     }

@@ -141,16 +141,4 @@ public class ApplicationController {
         return "availability";
     }
 
-//    @GetMapping("/competence")
-//    public String showCompetencePage(Model model) {
-//
-//        return "competence";
-//    }
-//    @PostMapping("/availability")
-//    public String serveCompetencePage(@RequestParam Integer yearsOfExperience, @RequestParam Date toDate) {
-//
-//        applyService.saveCompetence(yearsOfExperience);
-//        return "competence";
-//    }
-
 }
