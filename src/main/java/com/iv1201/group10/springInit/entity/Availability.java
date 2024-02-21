@@ -19,7 +19,7 @@ public class Availability {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private Person personId;
 
     @Column(name = "from_date")
     private Date fromDate;
@@ -27,6 +27,9 @@ public class Availability {
     @Column(name = "to_date")
     private Date toDate;
 
+    public void setPerson(Person personId) {
+    this.personId =personId;
+    }
     public Availability() {
     }
 }
