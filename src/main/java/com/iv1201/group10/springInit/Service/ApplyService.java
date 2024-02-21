@@ -3,6 +3,7 @@ package com.iv1201.group10.springInit.Service;
 import com.iv1201.group10.springInit.entity.Availability;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.repository.AvailabilityRepository;
+import com.iv1201.group10.springInit.repository.CompetenceProfileRepository;
 import com.iv1201.group10.springInit.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class ApplyService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private CompetenceProfileRepository competenceProfileRepository;
 
     public void saveAvailability(Date fromDate, Date toDate) {
 //        SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -43,6 +46,20 @@ public class ApplyService {
         // Save the availability to the database
         availabilityRepository.save(availability);
     }
+//    public void saveCompetence(Integer yearsOfExperience) {
+//        Person person = getAuthenticatedUser();
+//
+//        CompetenceProfile competenceProfile= new CompetenceProfile();
+//        competenceProfile.setYearsOfExperience(yearsOfExperience);
+//        competenceProfile.setCompetence();
+//        competenceProfile.setPerson(person);
+//
+//    }
+
+
+
+
+
 
     private Person getAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -50,7 +67,7 @@ public class ApplyService {
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String username = userDetails.getUsername();
-
+            System.out.println("user details"+ userDetails);
             return personRepository.findByUsername(username);
 
         } else {

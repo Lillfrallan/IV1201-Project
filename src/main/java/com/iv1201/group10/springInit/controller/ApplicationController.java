@@ -1,5 +1,6 @@
 package com.iv1201.group10.springInit.controller;
 
+import com.iv1201.group10.springInit.Service.ApplyService;
 import com.iv1201.group10.springInit.Service.RecruitmentService;
 import com.iv1201.group10.springInit.Service.RegistrationService;
 import com.iv1201.group10.springInit.entity.Competence;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -62,7 +64,7 @@ public class ApplicationController {
     public String retrieveLoginPage(BindingResult result) {
         if (result.hasErrors())
             return "login";
-        return "redirect:/in";
+        return "redirect:/availability";
     }
 
     @Autowired
@@ -123,5 +125,32 @@ public class ApplicationController {
         return "recruiter";
     }
 
+    @Autowired
+    private ApplyService applyService;
+
+    @GetMapping("/availability")
+    public String showAvailabilityPage(Model model) {
+
+
+        return "availability";
+    }
+    @PostMapping("/availability")
+    public String serveAvailablityPage(@RequestParam Date fromDate, @RequestParam Date toDate) {
+
+        applyService.saveAvailability(fromDate, toDate);
+        return "availability";
+    }
+
+//    @GetMapping("/competence")
+//    public String showCompetencePage(Model model) {
+//
+//        return "competence";
+//    }
+//    @PostMapping("/availability")
+//    public String serveCompetencePage(@RequestParam Integer yearsOfExperience, @RequestParam Date toDate) {
+//
+//        applyService.saveCompetence(yearsOfExperience);
+//        return "competence";
+//    }
 
 }
