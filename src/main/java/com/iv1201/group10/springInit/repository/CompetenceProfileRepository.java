@@ -4,6 +4,7 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
 
 /**
@@ -32,9 +33,10 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
  /**
   * Retrieves a list of competence profiles by competence ID and years of experience.
   *
-  * @param competence_id      the ID of the competence
+  * @param competence_id       the ID of the competence
   * @param years_of_experience the years of experience
   * @return a list of competence profiles matching the given competence ID and years of experience
   */
  List<CompetenceProfile> findByCompetence_competenceIdAndYearsOfExperience(Integer competence_id, Integer years_of_experience);
 }
+
