@@ -19,10 +19,9 @@ public class Security {
         httpSecurity.authorizeHttpRequests(
                 (requests ->
                         requests.requestMatchers("/","/register").permitAll()
-                                .requestMatchers("/admin").hasRole("recruiter")
-                                .requestMatchers("/in").hasRole("applicant")
-                                .anyRequest().authenticated()
-                                ))
+                                .requestMatchers("/recruiter").hasRole("recruiter")
+                                .requestMatchers("/competence", "/availability").hasRole("applicant")
+                                .anyRequest().authenticated()))
                 .formLogin((form) ->
                         form.loginPage("/login").permitAll()
                         .successHandler(authenticationSuccessHandler()))
