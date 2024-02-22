@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
 
-
 <body>
 <h2>Add Availability</h2>
-<form th:action="@{/availability}"  method="post">
-
+<form th:action="@{/availability}" method="post" onsubmit="return validateDates()">
 
     <!-- Add new availability periods -->
     <label>From Date:</label>
     <label>
-        <input type="date" name="fromDate" required />
+        <input type="date" name="fromDate" id="fromDate" required />
     </label>
 
     <label>To Date:</label>
     <label>
-        <input type="date" name="toDate" required />
+        <input type="date" name="toDate" id="toDate" required />
     </label>
 
     <!-- Button to add a new availability period -->
@@ -23,10 +21,22 @@
 
     <br/>
 
-    <div class="mb-3 text-center">
-        <a href="/competence">Go back to add competence</a>
-    </div>
+    <button type="submit">Next</button>
 </form>
+
+<script>
+    function validateDates() {
+        var fromDate = document.getElementById('fromDate').value;
+        var toDate = document.getElementById('toDate').value;
+
+        if (new Date(toDate) < new Date(fromDate)) {
+            alert('To Date cannot be earlier than From Date');
+            return false;
+        }
+        alert('Date added successfully');
+        return true;
+    }
+</script>
 </body>
 
 </html>
