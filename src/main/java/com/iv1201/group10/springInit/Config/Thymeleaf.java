@@ -1,6 +1,5 @@
 package com.iv1201.group10.springInit.Config;
 
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +11,9 @@ import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+/**
+ * Configuration class for Thymeleaf settings.
+ */
 @Configuration
 @EnableWebMvc
 public class Thymeleaf implements WebMvcConfigurer, ApplicationContextAware {
@@ -37,6 +39,7 @@ public class Thymeleaf implements WebMvcConfigurer, ApplicationContextAware {
         temp.setEnableSpringELCompiler(true);
         return temp;
     }
+
     /**
      * Configuration for the SpringResourceTemplateResolver which resolves the HTML templates.
      *
