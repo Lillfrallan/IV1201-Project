@@ -21,7 +21,6 @@ public class ApplyService {
 
         PersonPrincipal person = (PersonPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-
         // Create an availability entity
         Availability availability = new Availability();
         availability.setPerson(person.getPerson());
