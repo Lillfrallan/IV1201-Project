@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.sql.Date;
@@ -145,7 +146,8 @@ public class ApplicationController {
     }
     @PostMapping("/competence")
     public String saveCompetencies(@RequestParam("name") String competencyName,
-                                   @RequestParam("experience") int yearsOfExperience) {
+                                   @RequestParam("experience") int yearsOfExperience,
+                                   RedirectAttributes redirectAttributes) {
         try {
             // Retrieve the currently authenticated user's PersonPrincipal
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -165,8 +167,9 @@ public class ApplicationController {
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
 
+                redirectAttributes.addFlashAttribute("successMessage", "Competencies saved successfully!");
                 // Redirect to a success page or another appropriate location
-                return "redirect:/success";
+                return "redirect:/competence";
             } else {
                 // Handle the case where the user is not authenticated or the principal is not a PersonPrincipal
                 return "redirect:/error";
