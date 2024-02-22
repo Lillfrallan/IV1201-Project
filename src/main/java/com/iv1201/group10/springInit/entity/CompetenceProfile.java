@@ -1,25 +1,24 @@
 package com.iv1201.group10.springInit.entity;
 
 import jakarta.persistence.*;
-
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-
-@Data
+/**
+ * Represents a competence profile associated with a persons competences.
+ */
 @Getter
 @Setter
+@Data
 @Entity
 @Table(name = "competence_profile")
 public class CompetenceProfile {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "competence_profile_id")
     private Integer competenceProfileId;
 
-    // Define the ManyToOne relationship with the Person entity
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id")
     private Person person;
@@ -30,7 +29,4 @@ public class CompetenceProfile {
 
     @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
-
-    // Constructors, getters, and setters
-    // Omitted for brevity
 }

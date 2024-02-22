@@ -3,8 +3,6 @@ package com.iv1201.group10.springInit.repository;
 import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-
 import java.util.List;
 
 /**
@@ -39,4 +37,3 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
   */
  List<CompetenceProfile> findByCompetence_competenceIdAndYearsOfExperience(Integer competence_id, Integer years_of_experience);
 }
-

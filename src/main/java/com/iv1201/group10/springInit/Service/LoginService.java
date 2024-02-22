@@ -1,19 +1,17 @@
 package com.iv1201.group10.springInit.Service;
 
 import com.iv1201.group10.springInit.entity.Person;
-import com.iv1201.group10.springInit.entity.PersonPrincipal;
+import com.iv1201.group10.springInit.security.PersonPrincipal;
 import com.iv1201.group10.springInit.entity.Role;
 import com.iv1201.group10.springInit.repository.PersonRepository;
 import com.iv1201.group10.springInit.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
