@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * Service class for managing recruitment-related operations.
+ */
 @Service
 public class RecruitmentService {
 
@@ -61,5 +64,3 @@ public class RecruitmentService {
 
 
     }
-
-

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service class for managing user registration.
+ */
 @Service
 public class RegistrationService {
 
@@ -16,6 +19,12 @@ public class RegistrationService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Saves a new user.
+     *
+     * @param person The Person object representing the user to be saved.
+     * @throws UserAlreadyExistException If a user with the same personal number, email, or username already exists.
+     */
     public void saveUser(Person person) throws UserAlreadyExistException {
         if (personRepository.findByPnr(person.getPnr()) != null)
             throw new UserAlreadyExistException("Personal number: '" + person.getPnr() + "', is already in use.", "pnr");
@@ -28,10 +37,7 @@ public class RegistrationService {
 
         String encryptedPassword = passwordEncoder.encode(person.getPassword());
         person.setPassword(encryptedPassword);
-
         person.setRoleId(2);
-
         personRepository.save(person);
     }
-
 }

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Interface for managing Competence entities.
+ * Service class for managing Competence entities.
  */
 @Service
 public class CompetenceService implements com.iv1201.group10.springInit.Service.interfaces.CompetenceService {
