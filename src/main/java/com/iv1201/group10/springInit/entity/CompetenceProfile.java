@@ -33,6 +33,10 @@ public class CompetenceProfile {
     @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
 
+    @Column(name = "status")
+    private String status;
+
+
     public CompetenceProfile(){
 
 

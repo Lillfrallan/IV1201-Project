@@ -123,5 +123,12 @@ public class ApplicationController {
         return "recruiter";
     }
 
+    @PostMapping("/updateStatus")
+    public String updateStatus(@ModelAttribute("personId") Long personId, @RequestParam("status") String status) {
+        recruitmentService.updateStatus(personId, status);
+        return "redirect:/recruiter";
+    }
+
+
 
 }

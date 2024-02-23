@@ -57,6 +57,7 @@
             <th>Surname</th>
             <th>Competence</th>
             <th>Years of Experience</th>
+            <th>Status</th>
         </tr>
         </thead>
         <!-- Table body -->
@@ -68,6 +69,14 @@
             <td><span th:text="${competenceProfile.person.surname}"></span></td>
             <td><span th:text="${competenceProfile.competence.name}"></span></td>
             <td><span th:text="${competenceProfile.yearsOfExperience}"></span> year(s)</td>
+            <!-- Select input for status -->
+            <td>
+                <select class="form-control status-select">
+                    <option value="accepted" th:selected="${competenceProfile.status == 'accepted'}">Accepted</option>
+                    <option value="rejected" th:selected="${competenceProfile.status == 'rejected'}">Rejected</option>
+                    <option value="unhandled" th:selected="${competenceProfile.status == 'unhandled'}">Unhandled</option>
+                </select>
+            </td>
         </tr>
         </tbody>
     </table>

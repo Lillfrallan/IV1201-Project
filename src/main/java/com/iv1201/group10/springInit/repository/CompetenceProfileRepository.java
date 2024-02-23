@@ -37,4 +37,7 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
   * @return a list of competence profiles matching the given competence ID and years of experience
   */
  List<CompetenceProfile> findByCompetence_competenceIdAndYearsOfExperience(Integer competence_id, Integer years_of_experience);
+
+
+
 }

@@ -59,7 +59,20 @@ public class RecruitmentService {
     public List<CompetenceProfile> getProfilesByCompetenceIdAndYears(Integer competenceId, Integer years) {
         return competenceProfileRepository.findByCompetence_competenceIdAndYearsOfExperience(competenceId, years);}
 
+    /**
+     * Updates the status of a competence profile.
+     * @param personId The ID of the competence profile to update.
+     * @param status The new status to set.
+     */
+    public void updateStatus(Long personId, String status) {
+        CompetenceProfile competenceProfile = competenceProfileRepository.findByPerson_Id(personId);
+        competenceProfile.setStatus(status);
+        competenceProfileRepository.save(competenceProfile);
+    }
+
 
     }
+
+
 
 
