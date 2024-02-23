@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Data
-@Getter
-@Setter
 /**
  * Represents a role entity in the application.
  * This class maps to the role table in the database.
  */
+@Entity
+@Data
+@Getter
+@Setter
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +21,4 @@ public class Role {
 
     @Column(name = "name")
     private String name;
-
 }

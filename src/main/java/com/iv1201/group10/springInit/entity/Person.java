@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
-@Entity
-@Data
-@Getter
-@Setter
 /**
  * Represents a person entity in the application.
  * This class maps to the person table in the database.
  */
+@Entity
+@Data
+@Getter
+@Setter
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "person_id")
     private Integer person_id;
 
@@ -41,6 +41,6 @@ public class Person {
     @Column(name = "role_id")
     private Integer roleId;
 
-    public Person(){}
-
+    @OneToMany(mappedBy = "person")
+    private List<CompetenceProfile> competenceProfiles;
 }
