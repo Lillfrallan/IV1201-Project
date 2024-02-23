@@ -142,8 +142,16 @@ public class ApplicationController {
     }
 
     @PostMapping("/updateStatus")
-    public String updateStatus(@ModelAttribute("personId") Long personId, @RequestParam("status") String status) {
-        recruitmentService.updateStatus(personId, status);
+    public String updateStatus(@RequestParam(name = "profileId") Integer profileId,
+                               @RequestParam(name = "status") String status) {
+        // Retrieve the competence profile by ID
+        CompetenceProfile profile = recruitmentService.getCompetenceProfileById(profileId);
+        // Update the status
+        profile.setStatus(status);
+        // Save the updated profile
+        recruitmentService.saveCompetenceProfile(profile, status);
+
+        // Redirect back to the recruiter page
         return "redirect:/recruiter";
     }
 

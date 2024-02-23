@@ -44,43 +44,52 @@
 
 <hr class="hr hr-blurry" />
 
-<!-- Display Competence Profiles -->
-<div class="container shadow p-3 mb-5 bg-white rounded">
-    <!-- Filtered Profiles Section -->
-    <h2>Filtered Profiles</h2>
-    <!-- Table for displaying profiles -->
-    <table class="table table-bordered table-sm table-hover">
-        <!-- Table header -->
-        <thead class="thead-dark">
-        <tr>
-            <th>First Name</th>
-            <th>Surname</th>
-            <th>Competence</th>
-            <th>Years of Experience</th>
-            <th>Status</th>
-        </tr>
-        </thead>
-        <!-- Table body -->
-        <tbody>
-        <!-- Iterate through competence profiles -->
-        <tr th:each="competenceProfile: ${profiles}" >
-            <!-- Display profile details -->
-            <td><span th:text="${competenceProfile.person.name}"></span></td>
-            <td><span th:text="${competenceProfile.person.surname}"></span></td>
-            <td><span th:text="${competenceProfile.competence.name}"></span></td>
-            <td><span th:text="${competenceProfile.yearsOfExperience}"></span> year(s)</td>
-            <!-- Select input for status -->
-            <td>
-                <select class="form-control status-select">
-                    <option value="accepted" th:selected="${competenceProfile.status == 'accepted'}">Accepted</option>
-                    <option value="rejected" th:selected="${competenceProfile.status == 'rejected'}">Rejected</option>
-                    <option value="unhandled" th:selected="${competenceProfile.status == 'unhandled'}">Unhandled</option>
-                </select>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<form th:action="@{/updateStatus}" method="post">
+    <!-- Display Competence Profiles -->
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <!-- Filtered Profiles Section -->
+        <h2>Filtered Profiles</h2>
+        <!-- Update Status button -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary btn-block">Update Status</button>
+        </div>
+        <!-- Table for displaying profiles -->
+        <table class="table table-bordered table-sm table-hover">
+            <!-- Table header -->
+            <thead class="thead-dark">
+            <tr>
+                <th>First Name</th>
+                <th>Surname</th>
+                <th>Competence</th>
+                <th>Years of Experience</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <!-- Table body -->
+            <tbody>
+            <!-- Iterate through competence profiles -->
+            <tr th:each="competenceProfile: ${profiles}" >
+                <!-- Display profile details -->
+                <td><span th:text="${competenceProfile.person.name}"></span></td>
+                <td><span th:text="${competenceProfile.person.surname}"></span></td>
+                <td><span th:text="${competenceProfile.competence.name}"></span></td>
+                <td><span th:text="${competenceProfile.yearsOfExperience}"></span> year(s)</td>
+                <!-- Select input for status -->
+                <td>
+                    <select class="form-control status-select" name="status">
+                        <option value="accepted" th:selected="${competenceProfile.status == 'accepted'}">Accepted</option>
+                        <option value="rejected" th:selected="${competenceProfile.status == 'rejected'}">Rejected</option>
+                        <option value="unhandled" th:selected="${competenceProfile.status == 'unhandled'}">Unhandled</option>
+                    </select>
+                    <!-- Hidden fields for profile ID -->
+                    <input type="hidden" name="profileId" th:value="${competenceProfile.competenceProfileId}" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+
 
 <hr class="hr hr-blurry" />
 </body>
