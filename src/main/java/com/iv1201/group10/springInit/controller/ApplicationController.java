@@ -160,6 +160,7 @@ public class ApplicationController {
         return "redirect:/recruiter"; // Redirect back to the recruiter page after updating status
     }
 
+
     /**
      * Displays the availability page.
      *
