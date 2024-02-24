@@ -1,23 +1,24 @@
 package com.iv1201.group10.springInit.controller;
 
-import com.iv1201.group10.springInit.Service.*;
+import com.iv1201.group10.springInit.Service.ApplyService;
+import com.iv1201.group10.springInit.Service.CompetenceProfileService;
+import com.iv1201.group10.springInit.Service.RecruitmentService;
+import com.iv1201.group10.springInit.Service.RegistrationService;
 import com.iv1201.group10.springInit.Service.interfaces.CompetenceService;
 import com.iv1201.group10.springInit.entity.Competence;
 import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
-import com.iv1201.group10.springInit.security.PersonPrincipal;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
+import com.iv1201.group10.springInit.security.PersonPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
@@ -141,12 +142,23 @@ public class ApplicationController {
         return "recruiter";
     }
 
-    @PostMapping("/updateStatus")
-    public String updateStatus(@ModelAttribute("personId") Long personId, @RequestParam("status") String status) {
-        recruitmentService.updateStatus(personId, status);
-        return "redirect:/recruiter";
+    @GetMapping("/updateStatus/{profileId}")
+    public String showUpdateStatusPage(@PathVariable("profileId") Integer profileId, Model model) {
+        // Retrieve the competence profile by its ID
+        CompetenceProfile competenceProfile = recruitmentService.getCompetenceProfileById(profileId);
+
+        // Add the competence profile and its status to the model
+        model.addAttribute("competenceProfile", competenceProfile);
+        model.addAttribute("status", competenceProfile.getStatus());
+
+        return "updateStatus";
     }
 
+    @PostMapping("/updateStatus")
+    public String updateStatus(@RequestParam("profileId") Integer profileId, @RequestParam("status") String status) {
+        recruitmentService.updateStatus(profileId, status);
+        return "redirect:/recruiter"; // Redirect back to the recruiter page after updating status
+    }
 
     /**
      * Displays the availability page.

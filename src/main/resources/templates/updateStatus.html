@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Status</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Update Status</h1>
+    <div>
+        <!-- Display Competence Profile Details -->
+        <h2>Competence Profile Details</h2>
+        <p><strong>Name:</strong> <span th:text="${competenceProfile.person.name}"></span></p>
+        <p><strong>Surname:</strong> <span th:text="${competenceProfile.person.surname}"></span></p>
+        <p><strong>Competence:</strong> <span th:text="${competenceProfile.competence.name}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${competenceProfile.status}"></span></p>
+    </div>
+    <form th:action="@{/updateStatus}" method="post">
+        <input type="hidden" name="profileId" th:value="${profileId}" />
+        <div class="form-group">
+            <label for="status">New Status:</label>
+            <select class="form-control" id="status" name="status">
+                <option value="accepted" th:selected="${status == 'accepted'}">Accepted</option>
+                <option value="rejected" th:selected="${status == 'rejected'}">Rejected</option>
+                <option value="unhandled" th:selected="${status == 'unhandled'}">Unhandled</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+</div>
+</body>
+</html>

@@ -29,7 +29,7 @@ public class Security {
         httpSecurity.authorizeHttpRequests(
                 (requests ->
                         requests.requestMatchers("/","/register").permitAll()
-                                .requestMatchers("/recruiter").hasRole("recruiter")
+                                .requestMatchers("/recruiter", "/updateStatus").hasRole("recruiter")
                                 .requestMatchers("/competence", "/availability").hasRole("applicant")
                                 .anyRequest().authenticated()))
                 .formLogin((form) ->
