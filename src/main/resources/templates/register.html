@@ -8,10 +8,11 @@
 </head>
 <body>
 
-<section class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+<section class="d-flex justify-content-center align-items-center" style="height: 93vh;">
     <div class="container shadow p-4 bg-white rounded" style="width: 400px;">
         <form th:action="@{/register}" th:object="${person}" method="post">
-            <h2 class="text-center">Register</h2>
+            <h2 class="text-center">R e g i s t e r</h2>
+            <hr class="hr hr-blurry" />
             <div th:if="${errorMsg != null and fieldName == 'pnr'}" class="error-message">
                 <span th:text="${errorMsg}"></span>
             </div>
@@ -48,6 +49,6 @@
         </form>
     </div>
 </section>
-
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Status</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{/fragments/header :: header}"></header>
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <!-- Header Section -->
+    <h2 class="text-center mb-4">S t a t u s</h2>
+    <hr class="hr hr-blurry" />
+
+    <!-- Status Form -->
+    <form th:action="@{/status}" method="get">
+        <!-- Status filter -->
+        <label for="status">Status:</label>
+        <select name="status" class="form-control">
+            <option value="">Select Status</option>
+            <option value="accepted" th:selected="${status == 'accepted'}">Accepted</option>
+            <option value="rejected" th:selected="${status == 'rejected'}">Rejected</option>
+            <option value="unhandled" th:selected="${status == 'unhandled'}">Unhandled</option>
+        </select>
+        <br>
+        <!-- Competences filter -->
+        <label for="competenceId">Competences:</label>
+        <select name="competenceId" class="form-control">
+            <option value="">Select Competence</option>
+            <!-- Loop through competences -->
+            <option th:each="competence : ${competences}"
+                    th:value="${competence.competenceId}"
+                    th:text="${competence.name}"
+                    th:selected="${competence.competenceId == selectedCompetenceId}">
+            </option>
+        </select>
+        <br>
+        <!-- Submit button for filtering -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Filter Profiles</button>
+        </div>
+    </form>
+
+</div>
+
+<!-- Display Competence Profiles -->
+<div class="container shadow p-3 mb-5 bg-white rounded">
+    <!-- Filtered Profiles Section -->
+    <h3>Filtered Profiles</h3>
+    <hr class="hr hr-blurry" />
+    <!-- Table for displaying profiles -->
+    <table class="table table-bordered table-sm table-hover">
+        <!-- Table header -->
+        <thead class="thead-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Surname</th>
+            <th>Competence</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <!-- Table body -->
+        <tbody>
+        <!-- Iterate through competence profiles -->
+        <tr th:each="competenceProfile: ${profiles}" >
+            <!-- Display profile details -->
+            <td><span th:text="${competenceProfile.person.name}"></span></td>
+            <td><span th:text="${competenceProfile.person.surname}"></span></td>
+            <td><span th:text="${competenceProfile.competence.name}"></span></td>
+            <td> <span th:text="${competenceProfile.status}"
+                       th:classappend="${competenceProfile.status == 'accepted'} ? 'badge badge-pill badge-success' :
+                 (${competenceProfile.status == 'rejected'} ? 'badge badge-pill badge-danger' :
+                 'badge badge-pill badge-secondary')">
+                </span></td>
+            <!-- Select input for status -->
+            <td class="text-center">
+                <!-- Create a link or button that redirects to a new page with the competence profile ID -->
+                <a th:href="@{/updateStatus/{profileId}(profileId=${competenceProfile.competenceProfileId})}">
+                    <button type="button" class="btn btn-outline-secondary">Update Status</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
