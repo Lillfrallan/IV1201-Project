@@ -28,7 +28,7 @@ public class ApplyService {
     public void saveAvailability(Date fromDate, Date toDate) {
         PersonPrincipal person = (PersonPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Availability availability = new Availability();
-        availability.setId(person.getPerson().getPerson_id());
+        availability.setPersonId(person.getPerson());
         availability.setFromDate(fromDate);
         availability.setToDate(toDate);
         availabilityRepository.save(availability);

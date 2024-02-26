@@ -1,23 +1,24 @@
 package com.iv1201.group10.springInit.controller;
 
-import com.iv1201.group10.springInit.Service.*;
+import com.iv1201.group10.springInit.Service.ApplyService;
+import com.iv1201.group10.springInit.Service.CompetenceProfileService;
+import com.iv1201.group10.springInit.Service.RecruitmentService;
+import com.iv1201.group10.springInit.Service.RegistrationService;
 import com.iv1201.group10.springInit.Service.interfaces.CompetenceService;
 import com.iv1201.group10.springInit.entity.Competence;
 import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
-import com.iv1201.group10.springInit.security.PersonPrincipal;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
+import com.iv1201.group10.springInit.security.PersonPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
@@ -139,6 +140,67 @@ public class ApplicationController {
         model.addAttribute("profiles", profiles);
         // Return the name of the Thymeleaf template for rendering
         return "recruiter";
+    }
+
+    /**
+     * Retrieves the competence profile with the specified profile ID and prepares the update status page.
+     *
+     * @param profileId The ID of the competence profile to update.
+     * @param model     The model to add attributes to for rendering the view.
+     * @return The name of the Thymeleaf template for the update status page.
+     */
+    @GetMapping("/updateStatus/{profileId}")
+    public String showUpdateStatusPage(@PathVariable("profileId") Integer profileId, Model model) {
+        // Retrieve the competence profile by its ID
+        CompetenceProfile competenceProfile = recruitmentService.getCompetenceProfileById(profileId);
+
+        // Add the competence profile and its status to the model
+        model.addAttribute("competenceProfile", competenceProfile);
+        model.addAttribute("status", competenceProfile.getStatus());
+
+        return "updateStatus";
+    }
+
+
+    /**
+     * Updates the status of a competence profile with the specified profile ID.
+     *
+     * @param profileId The ID of the competence profile to update.
+     * @param status    The new status to set for the competence profile.
+     * @return A redirect to the recruiter page after updating the status.
+     */
+    @PostMapping("/updateStatus")
+    public String updateStatus(@RequestParam("profileId") Integer profileId, @RequestParam("status") String status) {
+        recruitmentService.updateStatus(profileId, status);
+        return "redirect:/recruiter"; // Redirect back to the recruiter page after updating status
+    }
+
+    /**
+     * Handles the GET request for displaying the status page.
+     * Retrieves competence profiles filtered by status and populates the model with necessary data.
+     *
+     * @param model        the model to be populated with data for rendering the view
+     * @param status       the status to filter competence profiles by, can be null if not specified
+     * @param competenceId the ID of the competence to filter by, can be null if not specified
+     * @return the name of the Thymeleaf template for the status page
+     */
+    @GetMapping("/status")
+    public String showStatusPage(Model model,
+                                 @RequestParam(name = "status", required = false) String status,
+                                 @RequestParam(name = "competenceId", required = false) Integer competenceId) {
+        // Retrieve competence profiles by status
+        List<CompetenceProfile> profiles = recruitmentService.getProfilesByStatus(status);
+
+        // Retrieve all competences
+        List<Competence> competences = recruitmentService.getAllCompetences();
+
+        // Add retrieved data to the model
+        model.addAttribute("profiles", profiles);
+        model.addAttribute("competences", competences);
+        model.addAttribute("selectedCompetenceId", competenceId);
+        model.addAttribute("status", status); // Add the 'status' attribute to the model
+
+        return "status"; // Return the name of your Thymeleaf template for the status page
     }
 
     /**

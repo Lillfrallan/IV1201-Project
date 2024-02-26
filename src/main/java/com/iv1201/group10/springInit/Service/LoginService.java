@@ -24,6 +24,13 @@ public class LoginService implements UserDetailsService {
     @Autowired
     private RoleRepository roleRepository;
 
+    /**
+     * Loads user details by username.
+     *
+     * @param username The username of the user.
+     * @return UserDetails object representing the user.
+     * @throws UsernameNotFoundException If the user with the specified username is not found.
+     */
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Person person = personRepository.findByUsername(username);
         if (person == null) {

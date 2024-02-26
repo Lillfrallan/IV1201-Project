@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Size;
+
 /**
  * Represents a competence profile associated with a persons competences.
  */
@@ -29,4 +31,14 @@ public class CompetenceProfile {
 
     @Column(name = "years_of_experience")
     private Integer yearsOfExperience;
+
+    @Column(name = "status")
+    @Size(max = 255)
+    private String status;
+
+
+    public CompetenceProfile(){
+
+
+    }
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Status</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{/fragments/header :: header}"></header>
+<div class="d-flex justify-content-center align-items-center" style="height: 93vh;">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <h2 class="text-center mb-4">U p d a t e</h2>
+        <hr class="hr hr-blurry" />
+        <div>
+            <!-- Display Competence Profile Details -->
+            <h3>Profile Details</h3>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <p class="alert alert-secondary" role="alert"><strong>Name:</strong>
+                        <span th:text="${competenceProfile.person.name}"></span> <span th:text="${competenceProfile.person.surname}"></span>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <p class="alert alert-secondary" role="alert"><strong>Competence Selected:</strong>
+                        <span th:text="${competenceProfile.competence.name}"></span>
+                    </p>
+                </li>
+                <li class="list-group-item">
+                    <p class="alert alert-secondary" role="alert"><strong>Status:</strong>
+                        <span th:text="${competenceProfile.status}"
+                              th:classappend="${competenceProfile.status == 'accepted'} ? 'badge badge-pill badge-success' :
+                         (${competenceProfile.status == 'rejected'} ? 'badge badge-pill badge-danger' :
+                         'badge badge-pill badge-secondary')">
+                        </span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <form th:action="@{/updateStatus}" method="post">
+            <input type="hidden" name="profileId" th:value="${profileId}" />
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="form-group text-center">
+                        <label for="status">New Status:</label>
+                        <select class="form-control mx-auto" id="status" name="status">
+                            <option value="accepted" th:selected="${status == 'accepted'}">Accepted</option>
+                            <option value="rejected" th:selected="${status == 'rejected'}">Rejected</option>
+                            <option value="unhandled" th:selected="${status == 'unhandled'}">Unhandled</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -4,6 +4,7 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The CompetenceProfileRepository interface provides methods to perform CRUD operations
@@ -36,4 +37,23 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
   * @return a list of competence profiles matching the given competence ID and years of experience
   */
  List<CompetenceProfile> findByCompetence_competenceIdAndYearsOfExperience(Integer competence_id, Integer years_of_experience);
+
+ /**
+  * Retrieves an optional containing the competence profile associated with the specified person ID.
+  *
+  * @param personId The ID of the person associated with the competence profile to retrieve.
+  * @return An Optional containing the competence profile with the specified person ID if found, or an empty Optional otherwise.
+  */
+ Optional<CompetenceProfile> findById(Integer personId);
+
+ /**
+  * Retrieves a list of competence profiles by their status.
+  *
+  * @param status the status used to filter competence profiles
+  * @return a list of competence profiles with the specified status
+  */
+ List<CompetenceProfile> findByStatus(String status);
+
+
+
 }

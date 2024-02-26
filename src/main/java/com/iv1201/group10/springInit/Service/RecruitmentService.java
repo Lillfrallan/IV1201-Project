@@ -6,8 +6,13 @@ import com.iv1201.group10.springInit.repository.CompetenceProfileRepository;
 import com.iv1201.group10.springInit.repository.CompetenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Service class for managing recruitment-related operations.
+ */
 @Service
 public class RecruitmentService {
 
@@ -59,7 +64,35 @@ public class RecruitmentService {
     public List<CompetenceProfile> getProfilesByCompetenceIdAndYears(Integer competenceId, Integer years) {
         return competenceProfileRepository.findByCompetence_competenceIdAndYearsOfExperience(competenceId, years);}
 
-
+    /**
+     * Updates the status of a competence profile with the given profile ID.
+     *
+     * @param profileId The ID of the competence profile to update.
+     * @param status The new status to set for the competence profile.
+     */
+    public void updateStatus(Integer profileId, String status) {
+        Optional<CompetenceProfile> optionalProfile = competenceProfileRepository.findById(profileId);
+        CompetenceProfile profile = optionalProfile.get();
+        profile.setStatus(status);
+        competenceProfileRepository.save(profile);
     }
+
+    /**
+     * Retrieves a competence profile by its ID.
+     *
+     * @param profileId The ID of the competence profile to retrieve.
+     * @return The competence profile with the specified ID, or null if not found.
+     */
+    public CompetenceProfile getCompetenceProfileById(Integer profileId) {
+        Optional<CompetenceProfile> competenceProfileOptional = competenceProfileRepository.findById(profileId);
+        return competenceProfileOptional.orElse(null);
+    }
+
+    public List<CompetenceProfile> getProfilesByStatus(String status) {
+        return competenceProfileRepository.findByStatus(status);
+    }
+
+
+}
 
 
