@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <title>Select Competencies</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
+<header th:replace="~{../static/fragments/header :: header}"></header>
 
-<div class="container mt-5">
+<main class="container mt-5">
     <h2>Select Competencies</h2>
 
     <!-- Display success message if it exists -->
@@ -30,12 +42,11 @@
             <input type="number" class="form-control" id="experience" name="experience" min="0">
         </div>
         <button type="submit" class="btn btn-primary">Add Competency</button>
-        <button type="submit" class="btn btn-primary">
-            <a href="/availability">To Availability</a>
-        </button>
     </form>
     <hr>
     <!-- Display selected competencies here if needed -->
-</div>
+</main>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

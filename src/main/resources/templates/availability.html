@@ -1,7 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Availability</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
 <body>
+<header th:replace="~{../static/fragments/header :: header}"></header>
+<main class="container mt-5">
 <h2>Add Availability</h2>
 <form th:action="@{/availability}" method="post" onsubmit="return validateDates()">
 
@@ -21,10 +38,9 @@
 
     <br/>
 
-    <div class="mb-3 text-center">
-        <a href="/competence">Add Competence</a>
-    </div>
 </form>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 <script>
     function validateDates() {
