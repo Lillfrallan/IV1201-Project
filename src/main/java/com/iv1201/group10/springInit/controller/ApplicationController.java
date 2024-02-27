@@ -98,7 +98,8 @@ public class ApplicationController {
     @GetMapping("/recruiter")
     public String showRecruitmentPage(@RequestParam(name = "competenceId", required = false) Integer competenceId,
                                       @RequestParam(name = "years", required = false) String yearsStr,
-                                      Model model) {
+                                      Model model,
+                                      RedirectAttributes redirectAttributes) {
         // Retrieve all competences
         List<Competence> competences = recruitmentService.getAllCompetences();
         // Add competences to the model
@@ -107,12 +108,22 @@ public class ApplicationController {
         // Declare a list to store retrieved profiles
         List<CompetenceProfile> profiles;
 
-        Integer years = null;
+        Double years = null;
 
-        // Parse years of experience if provided
+        // Validate input format
         if (yearsStr != null && !yearsStr.isEmpty()) {
+            // Check if the input contains a decimal point
+            if (!yearsStr.contains(".")) {
+                // Append ".0" to the input string
+                yearsStr += ".0";
+            }
+            // Check if the input matches the format #.1f
+            if (!yearsStr.matches("\\d*\\.\\d{1}")) {
+                redirectAttributes.addFlashAttribute("failedmessage", "Enter a decimal, for example, 0.7!");
+                return "redirect:/recruiter"; // Redirect back to the recruiter page
+            }
             try {
-                years = Integer.parseInt(yearsStr);
+                years = Double.parseDouble(yearsStr);
             } catch (NumberFormatException e) {
                 // Handle invalid input
                 // For example, you can log an error or provide a default value
@@ -144,6 +155,8 @@ public class ApplicationController {
         // Return the name of the Thymeleaf template for rendering
         return "recruiter";
     }
+
+
 
 
     /**
@@ -256,7 +269,8 @@ public class ApplicationController {
      */
     @PostMapping("/competence")
     public String saveCompetencies(@RequestParam("name") String competencyName,
-                                   @RequestParam("experience") int yearsOfExperience,
+                                   @RequestParam("year_experience") Integer yearsOfExperience,
+                                   @RequestParam("month_experience") Integer monthOfExperience,
                                    RedirectAttributes redirectAttributes) {
         try {
             // Retrieve the currently authenticated user's PersonPrincipal
@@ -264,13 +278,11 @@ public class ApplicationController {
             if (authentication != null && authentication.getPrincipal() instanceof PersonPrincipal principal) {
                 // Find the Competence object by name
                 Competence competence = competenceService.getCompetenceByName(competencyName).orElse(null);
-
                 // Create a new CompetenceProfile object
                 CompetenceProfile competenceProfile = new CompetenceProfile();
                 competenceProfile.setPerson(principal.getPerson());
                 competenceProfile.setCompetence(competence);
-                competenceProfile.setYearsOfExperience(yearsOfExperience);
-                competenceProfile.setStatus("unhandled");
+                competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
