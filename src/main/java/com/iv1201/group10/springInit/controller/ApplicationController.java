@@ -91,12 +91,13 @@ public class ApplicationController {
      * Retrieves a list of competences and competence profiles based on the provided filters (if any) and adds them to the model.
      *
      * @param competenceId The ID of the selected competence (optional).
-     * @param years        The years of experience (optional).
+     * @param yearsStr        The years of experience (optional).
      * @param model        The model to which attributes will be added for rendering in the view.
      * @return The name of the Thymeleaf template to be rendered for the recruitment page.
      */
     @GetMapping("/recruiter")
     public String showRecruitmentPage(@RequestParam(name = "competenceId", required = false) Integer competenceId,
+                                      @RequestParam(name = "years", required = false) String yearsStr,
                                       @RequestParam(name = "years", required = false) Double years,
                                       Model model) {
         // Retrieve all competences
@@ -107,40 +108,44 @@ public class ApplicationController {
         // Declare a list to store retrieved profiles
         List<CompetenceProfile> profiles;
 
-        // Check if years of experience filter is provided
-        if (years != null) {
-            // Check if competence filter is also provided
-            if (competenceId != null) {
-                // Retrieve profiles filtered by both competence ID and years of experience
-                profiles = recruitmentService.getProfilesByCompetenceIdAndYears(competenceId, years);
-                // Add selected years and competence ID to the model
-                model.addAttribute("selectedYears", years);
-                model.addAttribute("selectedCompetenceId", competenceId);
-            } else {
-                // Retrieve profiles filtered by years of experience only
-                profiles = recruitmentService.getProfilesByYearsOfExperience(years);
-                // Add selected years to the model
-                model.addAttribute("selectedYears", years);
-                // Add null competence ID to the model (no competence selected)
-                model.addAttribute("selectedCompetenceId", null);
+        Integer years = null;
+
+        // Parse years of experience if provided
+        if (yearsStr != null && !yearsStr.isEmpty()) {
+            try {
+                years = Integer.parseInt(yearsStr);
+            } catch (NumberFormatException e) {
+                // Handle invalid input
+                // For example, you can log an error or provide a default value
+                // In this case, we'll ignore the input and proceed without filtering by years
             }
-        } else if (competenceId != null) {
-            // Retrieve profiles filtered by competence ID only
-            profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
-            // Add selected competence ID to the model
-            model.addAttribute("selectedCompetenceId", competenceId);
-        } else {
-            // No filters provided, retrieve all competence profiles
-            profiles = recruitmentService.getAllCompetenceId();
-            // Add null competence ID to the model (no competence selected)
-            model.addAttribute("selectedCompetenceId", null);
         }
+
+        // Filter profiles based on competence ID and years of experience if filters are provided
+        if (competenceId != null || years != null) {
+            if (competenceId != null) {
+                // If competenceId is not null, retrieve profiles filtered by competenceId only
+                profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
+            } else {
+                // If competenceId is null, retrieve profiles filtered by years of experience only
+                profiles = recruitmentService.getProfilesByYearsOfExperience(years);
+            }
+        } else {
+            // If both competenceId and years are null, retrieve all competence profiles
+            profiles = recruitmentService.getAllCompetenceId();
+        }
+
+        // Add selected years and competence ID to the model
+        model.addAttribute("selectedYears", years);
+        model.addAttribute("selectedCompetenceId", competenceId);
 
         // Add retrieved profiles to the model
         model.addAttribute("profiles", profiles);
+
         // Return the name of the Thymeleaf template for rendering
         return "recruiter";
     }
+
 
     /**
      * Retrieves the competence profile with the specified profile ID and prepares the update status page.
@@ -162,19 +167,24 @@ public class ApplicationController {
     }
 
 
+
     /**
      * Updates the status of a competence profile with the specified profile ID.
      *
      * @param profileId The ID of the competence profile to update.
      * @param status    The new status to set for the competence profile.
+     * @param redirectAttributes The redirect attributes object to add flash attributes
      * @return A redirect to the recruiter page after updating the status.
      */
     @PostMapping("/updateStatus")
-    public String updateStatus(@RequestParam("profileId") Integer profileId, @RequestParam("status") String status) {
+    public String updateStatus(@RequestParam("profileId") Integer profileId,
+                               @RequestParam("status") String status,
+                               RedirectAttributes redirectAttributes) {
         recruitmentService.updateStatus(profileId, status);
+        // Add success message as flash attribute
+        redirectAttributes.addFlashAttribute("successMessage", "Status saved successfully!");
         return "redirect:/recruiter"; // Redirect back to the recruiter page after updating status
     }
-
     /**
      * Handles the GET request for displaying the status page.
      * Retrieves competence profiles filtered by status and populates the model with necessary data.
@@ -237,7 +247,6 @@ public class ApplicationController {
         model.addAttribute("competence", new Competence());
         return "competence";
     }
-
     /**
      * Processes the submission of competence form.
      *
