@@ -30,7 +30,7 @@ public class CompetenceProfile {
     private Competence competence;
 
     @Column(name = "years_of_experience")
-    private Integer yearsOfExperience;
+    private Double yearsOfExperience;
 
     @Column(name = "status")
     @Size(max = 255)

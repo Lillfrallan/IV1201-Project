@@ -9,4 +9,6 @@ public interface CompetenceService {
     Optional<Competence> getCompetenceById(Integer id);
     Optional<Competence> getCompetenceByName(String name); // New method
     void saveCompetence(Competence competence);
+
+    Double combineExperience(Integer year, Integer month);
 }

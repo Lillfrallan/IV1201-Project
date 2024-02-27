@@ -97,7 +97,7 @@ public class ApplicationController {
      */
     @GetMapping("/recruiter")
     public String showRecruitmentPage(@RequestParam(name = "competenceId", required = false) Integer competenceId,
-                                      @RequestParam(name = "years", required = false) Integer years,
+                                      @RequestParam(name = "years", required = false) Double years,
                                       Model model) {
         // Retrieve all competences
         List<Competence> competences = recruitmentService.getAllCompetences();
@@ -248,7 +248,8 @@ public class ApplicationController {
      */
     @PostMapping("/competence")
     public String saveCompetencies(@RequestParam("name") String competencyName,
-                                   @RequestParam("experience") int yearsOfExperience,
+                                   @RequestParam("year_experience") Integer yearsOfExperience,
+                                   @RequestParam("month_experience") Integer monthOfExperience,
                                    RedirectAttributes redirectAttributes) {
         try {
             // Retrieve the currently authenticated user's PersonPrincipal
@@ -256,12 +257,11 @@ public class ApplicationController {
             if (authentication != null && authentication.getPrincipal() instanceof PersonPrincipal principal) {
                 // Find the Competence object by name
                 Competence competence = competenceService.getCompetenceByName(competencyName).orElse(null);
-
                 // Create a new CompetenceProfile object
                 CompetenceProfile competenceProfile = new CompetenceProfile();
                 competenceProfile.setPerson(principal.getPerson());
                 competenceProfile.setCompetence(competence);
-                competenceProfile.setYearsOfExperience(yearsOfExperience);
+                competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);

@@ -27,7 +27,7 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
   * @param yearsOfService the years of experience
   * @return a list of competence profiles matching the given years of experience
   */
- List<CompetenceProfile> findByYearsOfExperience(Integer yearsOfService);
+ List<CompetenceProfile> findByYearsOfExperience(Double yearsOfService);
 
  /**
   * Retrieves a list of competence profiles by competence ID and years of experience.
@@ -36,7 +36,7 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
   * @param years_of_experience the years of experience
   * @return a list of competence profiles matching the given competence ID and years of experience
   */
- List<CompetenceProfile> findByCompetence_competenceIdAndYearsOfExperience(Integer competence_id, Integer years_of_experience);
+ List<CompetenceProfile> findByCompetence_competenceIdAndYearsOfExperience(Integer competence_id, Double years_of_experience);
 
  /**
   * Retrieves an optional containing the competence profile associated with the specified person ID.
