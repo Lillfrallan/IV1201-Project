@@ -209,7 +209,7 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @GetMapping("/availability")
-    public String showAvailabilityPage() {
+    public String showAvailabilityPage(Model model) {
         return "availability";
     }
 
@@ -221,9 +221,18 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @PostMapping("/availability")
-    public String serveAvailabilityPage(@RequestParam Date fromDate, @RequestParam Date toDate) {
-        applyService.saveAvailability(fromDate, toDate);
-        return "availability";
+    public String serveAvailabilityPage(@RequestParam Date fromDate,
+                                        @RequestParam Date toDate,
+                                        Model model) {
+
+        if (toDate.before(fromDate)) {
+            model.addAttribute("error", "To Date cannot be earlier than From Date");
+        } else {
+            applyService.saveAvailability(fromDate, toDate);
+            model.addAttribute("success", "Dates added successfully!");
+        }
+
+        return showAvailabilityPage(model);
     }
 
     /**

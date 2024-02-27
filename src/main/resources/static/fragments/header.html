@@ -26,11 +26,16 @@
                         <button type="button" class="nav-link btn btn-outline-light btn-sm" >A v a i l a b i l i t y</button>
                     </a>
                 </li>
+
+                <form  class="nav-item mr-2"
+                        th:action="@{/logout}" method="post">
+                    <button type="submit" class="nav-link btn btn-outline-light btn-sm">Logout</button>
+                </form>
+
             </ul>
         </div>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Logout</button>
-        </form>
+
+
     </div>
 </header>
 </body>

@@ -20,8 +20,15 @@
 <header th:replace="~{../static/fragments/header :: header}"></header>
 <main class="container mt-5">
 <h2>Add Availability</h2>
-<form th:action="@{/availability}" method="post" onsubmit="return validateDates()">
+<form th:action="@{/availability}" method="post">
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
 
+    <!-- Display success message -->
+    <div th:if="${success}" class="success-message">
+        <p th:text="${success}"></p>
+    </div>
     <!-- Add new availability periods -->
     <label>From Date:</label>
     <label>
@@ -42,18 +49,6 @@
 </main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 
-<script>
-    function validateDates() {
-        var fromDate = document.getElementById('fromDate').value;
-        var toDate = document.getElementById('toDate').value;
 
-        if (new Date(toDate) < new Date(fromDate)) {
-            alert('To Date cannot be earlier than From Date');
-            return false;
-        }
-        alert('Availability added successfully');
-        return true;
-    }
-</script>
 </body>
 </html>
