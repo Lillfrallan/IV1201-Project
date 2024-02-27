@@ -29,15 +29,9 @@
         <br>
         <!-- New filter for years of experience -->
         <label for="years">Years of Experience:</label>
-        <select name="years" class="form-control">
-            <!-- Default option for any years -->
-            <option value="" th:selected="${selectedYears == null}">Any</option>
-            <!-- Options for specific years -->
-            <option value="1" th:selected="${selectedYears == 1}">1 Year(s)</option>
-            <option value="2" th:selected="${selectedYears == 2}">2 Year(s)</option>
-            <option value="3" th:selected="${selectedYears == 3}">3 Year(s)</option>
-            <!-- Add more options as needed -->
-        </select>
+        <input type="number" name="years" class="form-control" placeholder="Enter years of experience" th:value="${selectedYears}" />
+        <br>
+
         <br>
         <!-- Submit button for filtering -->
         <div class="text-center">
@@ -46,6 +40,10 @@
     </form>
 </div>
 
+<!-- Display success message if it exists -->
+<div th:if="${successMessage}" id="successMessage" class="alert alert-success text-center" role="alert">
+    <strong th:text="${successMessage}"></strong>
+</div>
 
 <!-- Display Competence Profiles -->
 <div class="container shadow p-3 mb-5 bg-white rounded">
@@ -61,6 +59,7 @@
             <th>Surname</th>
             <th>Competence</th>
             <th>Years of Experience</th>
+            <th>Status</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -73,6 +72,11 @@
             <td><span th:text="${competenceProfile.person.surname}"></span></td>
             <td><span th:text="${competenceProfile.competence.name}"></span></td>
             <td><span th:text="${competenceProfile.yearsOfExperience}"></span> year(s)</td>
+            <td> <span th:text="${competenceProfile.status}"
+                       th:classappend="${competenceProfile.status == 'accepted'} ? 'badge badge-pill badge-success' :
+                 (${competenceProfile.status == 'rejected'} ? 'badge badge-pill badge-danger' :
+                 'badge badge-pill badge-secondary')">
+                </span></td>
             <!-- Select input for status -->
             <td class="text-center">
                 <!-- Create a link or button that redirects to a new page with the competence profile ID -->
@@ -86,5 +90,16 @@
     </table>
 </div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
+<!-- JavaScript code to hide the success message after 1 second -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    setTimeout(function() {
+        const successMessageDiv = document.getElementById('successMessage');
+        if (successMessageDiv) {
+            successMessageDiv.style.display = 'none';
+        }
+    }, 1000);
+    /*]]>*/
+</script>
 </body>
 </html>
