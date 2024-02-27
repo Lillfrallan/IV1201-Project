@@ -51,7 +51,7 @@ public class RecruitmentService {
      * @param yearsOfService The years of experience to filter by.
      * @return A list of competence profiles filtered by the given years of experience.
      */
-    public List<CompetenceProfile> getProfilesByYearsOfExperience(Integer yearsOfService){
+    public List<CompetenceProfile> getProfilesByYearsOfExperience(Double yearsOfService){
         return competenceProfileRepository.findByYearsOfExperience(yearsOfService);
     }
 
@@ -61,7 +61,7 @@ public class RecruitmentService {
      * @param years The years of experience to filter by.
      * @return A list of competence profiles filtered by the given competence ID and years of experience.
      */
-    public List<CompetenceProfile> getProfilesByCompetenceIdAndYears(Integer competenceId, Integer years) {
+    public List<CompetenceProfile> getProfilesByCompetenceIdAndYears(Integer competenceId, Double years) {
         return competenceProfileRepository.findByCompetence_competenceIdAndYearsOfExperience(competenceId, years);}
 
     /**
@@ -88,10 +88,15 @@ public class RecruitmentService {
         return competenceProfileOptional.orElse(null);
     }
 
+    /**
+     * Retrieves competence profiles filtered by the given status.
+     *
+     * @param status The status to filter competence profiles by.
+     * @return A list of competence profiles filtered by the given status.
+     */
     public List<CompetenceProfile> getProfilesByStatus(String status) {
         return competenceProfileRepository.findByStatus(status);
     }
-
 
 }
 

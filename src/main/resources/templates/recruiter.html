@@ -29,8 +29,11 @@
         <br>
         <!-- New filter for years of experience -->
         <label for="years">Years of Experience:</label>
-        <input type="number" name="years" class="form-control" placeholder="Enter years of experience" th:value="${selectedYears}" />
+        <input type="text" name="years" class="form-control" placeholder="Enter years of experience" th:value="${selectedYears}" />
         <br>
+        <div th:if="${failedmessage}" id="successMessage" class="alert alert-danger text-center" role="alert">
+            <strong th:text="${failedmessage}"></strong>
+        </div>
 
         <br>
         <!-- Submit button for filtering -->
@@ -98,7 +101,7 @@
         if (successMessageDiv) {
             successMessageDiv.style.display = 'none';
         }
-    }, 1000);
+    }, 3000);
     /*]]>*/
 </script>
 </body>
