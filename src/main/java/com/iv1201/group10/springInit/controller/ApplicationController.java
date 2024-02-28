@@ -10,6 +10,7 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import com.iv1201.group10.springInit.security.PersonPrincipal;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,9 +20,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Controller handling various actions related to application processes such as
@@ -66,9 +67,11 @@ public class ApplicationController {
      * @throws UserAlreadyExistException if the user already exists.
      */
     @PostMapping("/register")
-    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result) throws UserAlreadyExistException {
+    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result, Model model) throws UserAlreadyExistException {
         if (result.hasErrors()) {
-            return "register";
+            model.addAttribute("person", person);
+            model.addAttribute("errors", result.getAllErrors()); // Add all errors to the model
+            return "/register";
         } else {
             registrationService.saveUser(person);
             return "redirect:/login";

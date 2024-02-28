@@ -11,33 +11,30 @@
 <section class="d-flex justify-content-center align-items-center" style="height: 93vh;">
     <div class="container shadow p-4 bg-white rounded" style="width: 400px;">
         <form th:action="@{/register}" th:object="${person}" method="post">
-            <h2 class="text-center">R e g i s t e r</h2>
+            <h2 class="text-center">Register</h2>
             <hr class="hr hr-blurry" />
-            <div th:if="${errorMsg != null and fieldName == 'pnr'}" class="error-message">
-                <span th:text="${errorMsg}"></span>
-            </div>
             <div class="mb-3">
+                <div class="" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 <input type="text" th:field="*{name}" class="form-control" placeholder="First name" required />
             </div>
             <div class="mb-3">
+                <div class="" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
                 <input type="text" th:field="*{surname}" class="form-control" placeholder="Last name" required />
             </div>
             <div class="mb-3">
+                <div class="" th:if="${#fields.hasErrors('pnr')}" th:errors="*{pnr}"></div>
                 <input type="text" th:field="*{pnr}" class="form-control" placeholder="Personal number" required />
             </div>
-            <div th:if="${errorMsg != null and fieldName == 'email'}" class="error-message">
-                <span th:text="${errorMsg}"></span>
-            </div>
             <div class="mb-3">
+                <div class="" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required />
             </div>
-            <div th:if="${errorMsg != null and fieldName == 'username'}" class="error-message">
-                <span th:text="${errorMsg}"></span>
-            </div>
             <div class="mb-3">
+                <div class="" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                 <input type="text" th:field="*{username}" class="form-control" placeholder="Username" required />
             </div>
             <div class="mb-3">
+                <div class="" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                 <input type="password" th:field="*{password}" class="form-control" placeholder="Password" required />
             </div>
             <div class="mb-3">
