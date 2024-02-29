@@ -283,6 +283,7 @@ public class ApplicationController {
                 competenceProfile.setPerson(principal.getPerson());
                 competenceProfile.setCompetence(competence);
                 competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
+                competenceProfile.setStatus("unhandled");
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
