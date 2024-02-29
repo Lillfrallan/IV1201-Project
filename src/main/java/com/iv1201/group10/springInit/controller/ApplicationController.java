@@ -281,6 +281,7 @@ public class ApplicationController {
                 // Create a new CompetenceProfile object
                 CompetenceProfile competenceProfile = new CompetenceProfile();
                 competenceProfile.setPerson(principal.getPerson());
+
                 competenceProfile.setCompetence(competence);
                 competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
                 competenceProfile.setStatus("unhandled");
