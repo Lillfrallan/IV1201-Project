@@ -10,6 +10,9 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import com.iv1201.group10.springInit.security.PersonPrincipal;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Controller handling various actions related to application processes such as
@@ -88,6 +90,14 @@ public class ApplicationController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Invalidate the session
+        }
+        return "redirect:/login"; // Redirect to the login page after logout
+    }
 
     /**
      * Handles the GET request to display the recruitment page with filters for competence and years of experience.
@@ -158,9 +168,6 @@ public class ApplicationController {
         // Return the name of the Thymeleaf template for rendering
         return "recruiter";
     }
-
-
-
 
     /**
      * Retrieves the competence profile with the specified profile ID and prepares the update status page.
