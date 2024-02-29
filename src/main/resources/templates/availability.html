@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Availability</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
 <body>
+<header th:replace="~{../static/fragments/header :: header}"></header>
+<main class="container mt-5">
 <h2>Add Availability</h2>
-<form th:action="@{/availability}"  method="post">
+<form th:action="@{/availability}" method="post">
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
 
-
+    <!-- Display success message -->
+    <div th:if="${success}" class="success-message">
+        <p th:text="${success}"></p>
+    </div>
     <!-- Add new availability periods -->
     <label>From Date:</label>
     <label>
-        <input type="date" name="fromDate" required />
+        <input type="date" name="fromDate" id="fromDate" required />
     </label>
 
     <label>To Date:</label>
     <label>
-        <input type="date" name="toDate" required />
+        <input type="date" name="toDate" id="toDate" required />
     </label>
 
     <!-- Button to add a new availability period -->
@@ -23,7 +45,10 @@
 
     <br/>
 
-    <button type="submit">Next</button>
 </form>
+</main>
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+
 </body>
 </html>
