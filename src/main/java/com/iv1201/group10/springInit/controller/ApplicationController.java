@@ -118,7 +118,7 @@ public class ApplicationController {
                 yearsStr += ".0";
             }
             // Check if the input matches the format #.1f
-            if (!yearsStr.matches("\\d*\\.\\d{1}")) {
+            if (!yearsStr.matches("\\d*\\.\\d")) {
                 redirectAttributes.addFlashAttribute("failedmessage", "Enter a decimal, for example, 0.7!");
                 return "redirect:/recruiter"; // Redirect back to the recruiter page
             }
@@ -132,16 +132,14 @@ public class ApplicationController {
         }
 
         // Filter profiles based on competence ID and years of experience if filters are provided
-        if (competenceId != null || years != null) {
-            if (competenceId != null && years != null) {
-                // If competenceId is not null, retrieve profiles filtered by competenceId only
-                profiles = recruitmentService.getProfilesByCompetenceIdAndYears(competenceId, years);
-            } else if (competenceId != null) {
-                profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
-            } else {
-                // If competenceId is null, retrieve profiles filtered by years of experience only
-                profiles = recruitmentService.getProfilesByYearsOfExperience(years);
-            }
+        if (competenceId != null && years != null) {
+            // If competenceId is not null, retrieve profiles filtered by competenceId only
+            profiles = recruitmentService.getProfilesByCompetenceIdAndYears(competenceId, years);
+        } else if (competenceId != null) {
+            profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
+        } else if (years != null){
+            // If competenceId is null, retrieve profiles filtered by years of experience only
+            profiles = recruitmentService.getProfilesByYearsOfExperience(years);
         } else {
             // If both competenceId and years are null, retrieve all competence profiles
             profiles = recruitmentService.getAllCompetenceId();
@@ -233,7 +231,7 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @GetMapping("/availability")
-    public String showAvailabilityPage(Model model) {
+    public String showAvailabilityPage() {
         return "availability";
     }
 
@@ -256,7 +254,7 @@ public class ApplicationController {
             model.addAttribute("success", "Dates added successfully!");
         }
 
-        return showAvailabilityPage(model);
+        return "redirect:/availability";
     }
 
     /**
@@ -308,7 +306,6 @@ public class ApplicationController {
             }
         } catch (Exception ex) {
             // Handle unexpected exceptions
-            ex.printStackTrace();
             return "redirect:/error";
         }
     }
