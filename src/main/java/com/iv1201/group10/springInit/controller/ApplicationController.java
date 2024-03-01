@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
@@ -105,29 +104,15 @@ public class ApplicationController {
         // Add competences to the model
         model.addAttribute("competences", competences);
 
+        Double years = null;
         // Declare a list to store retrieved profiles
         List<CompetenceProfile> profiles;
-
-        Double years = null;
-
-        // Validate input format
-        if (yearsStr != null && !yearsStr.isEmpty()) {
-            // Check if the input contains a decimal point
-            if (!yearsStr.contains(".")) {
-                // Append ".0" to the input string
-                yearsStr += ".0";
-            }
-            // Check if the input matches the format #.1f
-            if (!yearsStr.matches("\\d*\\.\\d{1}")) {
-                redirectAttributes.addFlashAttribute("failedmessage", "Enter a decimal, for example, 0.7!");
-                return "redirect:/recruiter"; // Redirect back to the recruiter page
-            }
+        if (yearsStr != null) {
             try {
                 years = Double.parseDouble(yearsStr);
             } catch (NumberFormatException e) {
-                // Handle invalid input
-                // For example, you can log an error or provide a default value
-                // In this case, we'll ignore the input and proceed without filtering by years
+                redirectAttributes.addFlashAttribute("failedmessage", "Enter a decimal, for example, 0.7!");
+                return "redirect:/recruiter"; // Redirect back to the recruiter page
             }
         }
 
@@ -177,8 +162,6 @@ public class ApplicationController {
 
         return "updateStatus";
     }
-
-
 
     /**
      * Updates the status of a competence profile with the specified profile ID.
@@ -231,7 +214,7 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @GetMapping("/availability")
-    public String showAvailabilityPage(Model model) {
+    public String showAvailabilityPage() {
         return "availability";
     }
 
@@ -254,7 +237,7 @@ public class ApplicationController {
             model.addAttribute("success", "Dates added successfully!");
         }
 
-        return showAvailabilityPage(model);
+        return showAvailabilityPage();
     }
 
     /**
