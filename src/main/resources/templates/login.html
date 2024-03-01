@@ -12,7 +12,7 @@
 <div class="d-flex justify-content-center align-items-center" style="height: 93vh;">
     <div class="container shadow p-4 bg-white rounded" style="width: 400px;">
         <form action="#" th:action="@{/login}" method="post">
-            <h1 class="text-center">L o g i n</h1>
+            <h1 class="text-center">Login</h1>
             <hr class="hr hr-blurry" />
             <div th:if="${param.error}" class="error-message mb-3 text-center">Invalid username and/or password.</div>
             <div class="input-group mb-3">
@@ -38,6 +38,6 @@
     </div>
 </div>
 <!-- Footer -->
-<footer th:replace="~{fragments/footer :: footer}"></footer>
+<footer th:replace="~{../static/fragments/footer :: footer}"></footer>
 </body>
 </html>

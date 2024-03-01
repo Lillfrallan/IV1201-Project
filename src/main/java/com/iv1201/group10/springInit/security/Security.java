@@ -28,7 +28,7 @@ public class Security {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(
                 (requests ->
-                        requests.requestMatchers("/","/register").permitAll()
+                        requests.requestMatchers("/register").permitAll()
                                 .requestMatchers("/recruiter", "/updateStatus", "/status").hasRole("recruiter")
                                 .requestMatchers("/competence", "/availability").hasRole("applicant")
                                 .anyRequest().authenticated()))

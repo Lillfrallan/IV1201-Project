@@ -132,16 +132,14 @@ public class ApplicationController {
         }
 
         // Filter profiles based on competence ID and years of experience if filters are provided
-        if (competenceId != null || years != null) {
-            if (competenceId != null && years != null) {
-                // If competenceId is not null, retrieve profiles filtered by competenceId only
-                profiles = recruitmentService.getProfilesByCompetenceIdAndYears(competenceId, years);
-            } else if (competenceId != null) {
-                profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
-            } else {
-                // If competenceId is null, retrieve profiles filtered by years of experience only
-                profiles = recruitmentService.getProfilesByYearsOfExperience(years);
-            }
+        if (competenceId != null && years != null) {
+            // If competenceId is not null, retrieve profiles filtered by competenceId only
+            profiles = recruitmentService.getProfilesByCompetenceIdAndYears(competenceId, years);
+        } else if (competenceId != null) {
+            profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
+        } else if(years != null) {
+            // If competenceId is null, retrieve profiles filtered by years of experience only
+            profiles = recruitmentService.getProfilesByYearsOfExperience(years);
         } else {
             // If both competenceId and years are null, retrieve all competence profiles
             profiles = recruitmentService.getAllCompetenceId();
