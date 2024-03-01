@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+</head>
+<body>
+<h1>Error <span th:text="${status} ?: 'Unknown'"></span></h1>
+<h2 th:text="${message} ?: ''"></h2>
+<div th:switch="${status}">
+    <h3 th:case="'400'">You did something wrong...</h3>
+    <h3 th:case="'401'">You are not allowed to be here!</h3>
+    <h3 th:case="'403'">You tried accessing a forbidden page...</h3>
+    <h3 th:case="'404'">Page not found. Please check the URL and try again.</h3>
+    <h3 th:case="'500'">Internal server error. Please try again later.</h3>
+    <h3 th:case="'502'">Bad Gateway. Please try again later.</h3>
+    <h3 th:case="'503'">Service Unavailable. We are either very popular or the website is temporarily under maintenance. Please try again later.</h3>
+    <h3 th:case="*">An unusual error occurred. Please try again.</h3>
+</div>
+</body>
+</html>

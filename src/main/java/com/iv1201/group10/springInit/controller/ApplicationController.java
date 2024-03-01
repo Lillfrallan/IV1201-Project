@@ -145,14 +145,14 @@ public class ApplicationController {
         }
 
         // Filter profiles based on competence ID and years of experience if filters are provided
-        if (competenceId != null || years != null) {
-            if (competenceId != null) {
-                // If competenceId is not null, retrieve profiles filtered by competenceId only
-                profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
-            } else {
-                // If competenceId is null, retrieve profiles filtered by years of experience only
-                profiles = recruitmentService.getProfilesByYearsOfExperience(years);
-            }
+        if (competenceId != null && years != null) {
+            // If competenceId is not null, retrieve profiles filtered by competenceId only
+            profiles = recruitmentService.getProfilesByCompetenceIdAndYears(competenceId, years);
+        } else if (competenceId != null) {
+            profiles = recruitmentService.getProfilesByCompetenceProfileId(competenceId);
+        } else if(years != null) {
+            // If competenceId is null, retrieve profiles filtered by years of experience only
+            profiles = recruitmentService.getProfilesByYearsOfExperience(years);
         } else {
             // If both competenceId and years are null, retrieve all competence profiles
             profiles = recruitmentService.getAllCompetenceId();
@@ -241,7 +241,7 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @GetMapping("/availability")
-    public String showAvailabilityPage() {
+    public String showAvailabilityPage(Model model) {
         return "availability";
     }
 
@@ -253,9 +253,18 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @PostMapping("/availability")
-    public String serveAvailabilityPage(@RequestParam Date fromDate, @RequestParam Date toDate) {
-        applyService.saveAvailability(fromDate, toDate);
-        return "availability";
+    public String serveAvailabilityPage(@RequestParam Date fromDate,
+                                        @RequestParam Date toDate,
+                                        Model model) {
+
+        if (toDate.before(fromDate)) {
+            model.addAttribute("error", "To Date cannot be earlier than From Date");
+        } else {
+            applyService.saveAvailability(fromDate, toDate);
+            model.addAttribute("success", "Dates added successfully!");
+        }
+
+        return showAvailabilityPage(model);
     }
 
     /**

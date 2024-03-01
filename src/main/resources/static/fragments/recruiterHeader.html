@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf Header</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Thymeleaf header -->
+<header class="bg-dark text-white">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+        <!-- Left side -->
+        <div>
+            <h3 class="mb-0">HireMe</h3>
+        </div>
+        <!-- Right side -->
+        <div>
+            <ul class="nav justify-content-center">
+                <li class="nav-item mr-2">
+                    <a  th:href="@{/recruiter}">
+                        <button type="button" class="nav-link btn btn-outline-light btn-sm" >P r o f i l e s</button>
+                    </a>
+                </li>
+                <li class="nav-item ml-2">
+                    <a th:href="@{/status}">
+                    <button type="button" class="nav-link btn btn-outline-light btn-sm" >S t a t u s</button>
+                    </a>
+                </li>
+                <li class="nav-item ml-2">
+                    <a th:href="@{/logout}">
+                        <button type="button" class="nav-link btn btn-outline-warning btn-sm" >S i g n o u t</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</header>
+</body>
+</html>
