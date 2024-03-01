@@ -90,15 +90,6 @@ public class ApplicationController {
         return "login";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate(); // Invalidate the session
-        }
-        return "redirect:/login"; // Redirect to the login page after logout
-    }
-
     /**
      * Handles the GET request to display the recruitment page with filters for competence and years of experience.
      * Retrieves a list of competences and competence profiles based on the provided filters (if any) and adds them to the model.
