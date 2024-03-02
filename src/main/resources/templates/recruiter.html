@@ -6,15 +6,15 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header th:replace="~{/fragments/header :: header}"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 <div class="container shadow p-3 mb-5 bg-white rounded">
     <!-- Header Section -->
-    <h2 class="text-center mb-4">R e c r u i t m e n t </h2>
+    <h2 class="text-center mb-4">R e c r u i t m e n t</h2>
     <hr class="hr hr-blurry" />
 
     <!-- Competences Form -->
     <form th:action="@{/recruiter}" method="get">
-        <label for="years">Competences:</label>
+        <label for="competences">Competences:</label>
         <select name="competenceId" class="form-control">
             <option value="">Select Competence</option>
             <!-- Loop through competences -->
@@ -27,14 +27,14 @@
         <!-- Hidden field for selected competence ID -->
         <input type="hidden" th:if="${selectedCompetenceId}" th:attr="value=${selectedCompetenceId}" name="selectedCompetenceId" />
         <br>
-        <!-- New filter for years of experience -->
+        <!-- Filter for years of experience -->
         <label for="years">Years of Experience:</label>
         <input type="text" name="years" class="form-control" placeholder="Enter years of experience" th:value="${selectedYears}" />
         <br>
-        <div th:if="${failedmessage}" id="successMessage" class="alert alert-danger text-center" role="alert">
+        <!-- Display error message if any -->
+        <div th:if="${failedmessage}" class="alert alert-danger text-center" role="alert">
             <strong th:text="${failedmessage}"></strong>
         </div>
-
         <br>
         <!-- Submit button for filtering -->
         <div class="text-center">
