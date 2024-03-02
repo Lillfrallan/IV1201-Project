@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-<header th:replace="~{../static/fragments/header :: header}"></header>
+<header th:replace="~{../static/fragments/applicantHeader :: header}"></header>
 <main class="container mt-5">
 <h2>Add Availability</h2>
 <form th:action="@{/availability}" method="post">
@@ -47,8 +47,6 @@
 
 </form>
 </main>
-<div th:replace="~{fragments/footer :: footer}"></div>
-
-
+<footer th:replace="~{../static/fragments/footer :: footer}"></footer>
 </body>
 </html>

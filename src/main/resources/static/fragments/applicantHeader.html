@@ -11,23 +11,31 @@
     <div class="container d-flex justify-content-between align-items-center py-3">
         <!-- Left side -->
         <div>
-            <h3 class="mb-0">H i r e M e</h3>
+            <h3 class="mb-0">HireMe</h3>
         </div>
         <!-- Right side -->
         <div>
             <ul class="nav justify-content-center">
                 <li class="nav-item mr-2">
-                    <a  th:href="@{/recruiter}">
-                        <button type="button" class="nav-link btn btn-outline-light btn-sm" >P r o f i l e s</button>
+                    <a href="/competence">
+                        <button type="button" class="nav-link btn btn-outline-light btn-sm" >C o m p e t e n c e</button>
                     </a>
                 </li>
-                <li class="nav-item ml-2">
-                    <a th:href="@{/status}">
-                    <button type="button" class="nav-link btn btn-outline-light btn-sm" >S t a t u s</button>
+                <li class="nav-item mr-2">
+                    <a href="/availability">
+                        <button type="button" class="nav-link btn btn-outline-light btn-sm" >A v a i l a b i l i t y</button>
                     </a>
                 </li>
+
+                <form  class="nav-item mr-2"
+                        th:action="@{/logout}" method="post">
+                    <button type="submit" class="nav-link btn btn-outline-light btn-sm">Logout</button>
+                </form>
+
             </ul>
         </div>
+
+
     </div>
 </header>
 </body>
