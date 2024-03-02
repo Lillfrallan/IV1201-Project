@@ -10,6 +10,10 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import com.iv1201.group10.springInit.security.PersonPrincipal;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.validation.Valid;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -65,9 +69,11 @@ public class ApplicationController {
      * @throws UserAlreadyExistException if the user already exists.
      */
     @PostMapping("/register")
-    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result) throws UserAlreadyExistException {
+    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result, Model model) throws UserAlreadyExistException {
         if (result.hasErrors()) {
-            return "register";
+            model.addAttribute("person", person);
+            model.addAttribute("errors", result.getAllErrors()); // Add all errors to the model
+            return "/register";
         } else {
             registrationService.saveUser(person);
             return "redirect:/login";
@@ -83,7 +89,6 @@ public class ApplicationController {
     public String serveLoginPage() {
         return "login";
     }
-
 
     /**
      * Handles the GET request to display the recruitment page with filters for competence and years of experience.
@@ -104,15 +109,29 @@ public class ApplicationController {
         // Add competences to the model
         model.addAttribute("competences", competences);
 
-        Double years = null;
         // Declare a list to store retrieved profiles
         List<CompetenceProfile> profiles;
-        if (yearsStr != null) {
+
+        Double years = null;
+
+        // Validate input format
+        if (yearsStr != null && !yearsStr.isEmpty()) {
+            // Check if the input contains a decimal point
+            if (!yearsStr.contains(".")) {
+                // Append ".0" to the input string
+                yearsStr += ".0";
+            }
+            // Check if the input matches the format #.1f
+            if (!yearsStr.matches("\\d*\\.\\d{1}")) {
+                redirectAttributes.addFlashAttribute("failedmessage", "Enter a decimal, for example, 0.7!");
+                return "redirect:/recruiter"; // Redirect back to the recruiter page
+            }
             try {
                 years = Double.parseDouble(yearsStr);
             } catch (NumberFormatException e) {
-                redirectAttributes.addFlashAttribute("failedmessage", "Enter a decimal, for example, 0.7!");
-                return "redirect:/recruiter"; // Redirect back to the recruiter page
+                // Handle invalid input
+                // For example, you can log an error or provide a default value
+                // In this case, we'll ignore the input and proceed without filtering by years
             }
         }
 
@@ -141,9 +160,6 @@ public class ApplicationController {
         return "recruiter";
     }
 
-
-
-
     /**
      * Retrieves the competence profile with the specified profile ID and prepares the update status page.
      *
@@ -162,6 +178,8 @@ public class ApplicationController {
 
         return "updateStatus";
     }
+
+
 
     /**
      * Updates the status of a competence profile with the specified profile ID.
@@ -214,7 +232,7 @@ public class ApplicationController {
      * @return The name of the Thymeleaf template to be rendered for availability.
      */
     @GetMapping("/availability")
-    public String showAvailabilityPage() {
+    public String showAvailabilityPage(Model model) {
         return "availability";
     }
 
@@ -237,7 +255,7 @@ public class ApplicationController {
             model.addAttribute("success", "Dates added successfully!");
         }
 
-        return showAvailabilityPage();
+        return showAvailabilityPage(model);
     }
 
     /**
@@ -273,10 +291,8 @@ public class ApplicationController {
                 // Create a new CompetenceProfile object
                 CompetenceProfile competenceProfile = new CompetenceProfile();
                 competenceProfile.setPerson(principal.getPerson());
-
                 competenceProfile.setCompetence(competence);
                 competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
-                competenceProfile.setStatus("unhandled");
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
