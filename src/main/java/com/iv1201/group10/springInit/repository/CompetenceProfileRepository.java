@@ -55,5 +55,17 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
  List<CompetenceProfile> findByStatus(String status);
 
 
+ /**
+  * Retrieves the competence profiles associated with a person's ID.
+  *
+  * @param personId the ID of the person whose competence profiles are to be retrieved
+  * @return a list of competence profiles associated with the specified person ID
+  */
+ List<CompetenceProfile> findByPerson_PersonId(Integer personId);
+
+
+
+
+
 
 }

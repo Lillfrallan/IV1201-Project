@@ -10,9 +10,6 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import com.iv1201.group10.springInit.security.PersonPrincipal;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -293,6 +290,7 @@ public class ApplicationController {
                 competenceProfile.setPerson(principal.getPerson());
                 competenceProfile.setCompetence(competence);
                 competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
+                competenceProfile.setStatus("unhandled");
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
@@ -311,4 +309,21 @@ public class ApplicationController {
             return "redirect:/error";
         }
     }
+
+    /**
+     * Retrieves the competence profiles representing the status of an applicant.
+     *
+     * @param model the Spring MVC model to which the competence profiles will be added
+     * @return the name of the Thymeleaf template used to display the applicant status
+     */
+    @GetMapping("/applicant/status")
+    public String viewApplicantStatus(Model model) {
+        // Call the service method to retrieve the list of competence profiles
+        List<CompetenceProfile> profiles = applyService.getApplicantStatuses();
+        // Add the list of competence profiles to the model
+        model.addAttribute("profiles", profiles);
+        return "applicantStatus"; // Return the name of the Thymeleaf template
+    }
+
+
 }

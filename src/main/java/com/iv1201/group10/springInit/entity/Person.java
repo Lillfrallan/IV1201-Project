@@ -22,7 +22,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id")
-    private Integer person_id;
+    private Integer personId;
 
     @NotBlank(message = "Name is required")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "Name must contain only alphabetical letters")

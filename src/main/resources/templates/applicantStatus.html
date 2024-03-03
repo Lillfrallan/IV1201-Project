@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Status</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header th:replace="~{../static/fragments/applicantHeader :: header}"></header>
+<div class="d-flex justify-content-center align-items-center" style="height: 93vh;">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <h2 class="text-center mb-4">My Status</h2>
+        <hr class="hr hr-blurry" />
+        <div>
+            <table class="table table-bordered table-sm table-hover">
+                <!-- Table header -->
+                <thead class="thead-dark">
+                <tr>
+                    <th>First Name</th>
+                    <th>Surname</th>
+                    <th>Competence</th>
+                    <th>Years of Experience</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                <!-- Iterate through competence profiles -->
+                <tr th:each="competenceProfile: ${profiles}" >
+                    <!-- Display profile details -->
+                    <td><span th:text="${competenceProfile.person.name}"></span></td>
+                    <td><span th:text="${competenceProfile.person.surname}"></span></td>
+                    <td><span th:text="${competenceProfile.competence.name}"></span></td>
+                    <td><span th:text="${competenceProfile.yearsOfExperience}"></span> year(s)</td>
+                    <td> <span th:text="${competenceProfile.status}"
+                               th:classappend="${competenceProfile.status == 'accepted'} ? 'badge badge-pill badge-success' :
+                            (${competenceProfile.status == 'rejected'} ? 'badge badge-pill badge-danger' :
+                         'badge badge-pill badge-secondary')">
+                        </span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{../static/fragments/footer :: footer}"></footer>
+</body>
+</html>

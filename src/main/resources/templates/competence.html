@@ -19,11 +19,14 @@
 <body>
 <header th:replace="~{../static/fragments/applicantHeader :: header}"></header>
 
+<div class="d-flex justify-content-center align-items-center" style="height: 90vh;">
+<div class="container shadow p-3 mb-5 bg-white rounded">
 <main class="container mt-5">
     <h2>Select Competencies</h2>
+    <hr class="hr hr-blurry">
 
     <!-- Display success message if it exists -->
-    <div th:if="${successMessage}" class="alert alert-danger" role="alert">
+    <div th:if="${successMessage}" class="alert alert-success" role="alert">
         <strong th:text="${successMessage}"></strong>
     </div>
 
@@ -43,12 +46,21 @@
             <label for="month_experience">Months of Experience:</label>
             <input type="number" class="form-control" id="month_experience" name="month_experience" min="0" max="11">
         </div>
-        <button type="submit" class="btn btn-primary">Add Competency</button>
+        <hr class="hr hr-blurry">
+        <div class="d-grid gap-2 d-md-block text-center">
+            <button type="submit" class="btn btn-primary">Add Competency</button>
+            <a href="/applicant/status">
+                <button type="button" class="btn btn-secondary" >My Status</button>
+            </a>
+            <a href="/availability">
+                <button type="button" class="btn btn-primary" >Availability</button>
+            </a>
+        </div>
     </form>
-    <hr>
-    <!-- Display selected competencies here if needed -->
-</main>
 
+</main>
+</div>
+</div>
 <footer th:replace="~{../static/fragments/footer :: footer}"></footer>
 </body>
 </html>
