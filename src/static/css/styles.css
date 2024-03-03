@@ -4673,12 +4673,12 @@ textarea.form-control-lg {
     color: #34383c;
 }
 
-.alert-success {
+.alert-danger {
     --bs-alert-color: #0f5132;
     --bs-alert-bg: #d1e7dd;
     --bs-alert-border-color: #badbcc;
 }
-.alert-success .alert-link {
+.alert-danger .alert-link {
     color: #0c4128;
 }
 

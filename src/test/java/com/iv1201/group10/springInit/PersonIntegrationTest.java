@@ -39,7 +39,7 @@ public class PersonIntegrationTest {
         entityManager.flush();
 
         // Retrieve the Person entity from the database
-        Person savedPerson = entityManager.find(Person.class, person.getPerson_id());
+        Person savedPerson = entityManager.find(Person.class, person.getPersonId());
 
         // Assert that the savedPerson matches the original person
         assertThat(savedPerson).isNotNull();

@@ -10,6 +10,7 @@ import com.iv1201.group10.springInit.entity.CompetenceProfile;
 import com.iv1201.group10.springInit.entity.Person;
 import com.iv1201.group10.springInit.exceptions.UserAlreadyExistException;
 import com.iv1201.group10.springInit.security.PersonPrincipal;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
 
@@ -66,9 +66,11 @@ public class ApplicationController {
      * @throws UserAlreadyExistException if the user already exists.
      */
     @PostMapping("/register")
-    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result) throws UserAlreadyExistException {
+    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result, Model model) throws UserAlreadyExistException {
         if (result.hasErrors()) {
-            return "register";
+            model.addAttribute("person", person);
+            model.addAttribute("errors", result.getAllErrors()); // Add all errors to the model
+            return "/register";
         } else {
             registrationService.saveUser(person);
             return "redirect:/login";
@@ -84,7 +86,6 @@ public class ApplicationController {
     public String serveLoginPage() {
         return "login";
     }
-
 
     /**
      * Handles the GET request to display the recruitment page with filters for competence and years of experience.
@@ -155,9 +156,6 @@ public class ApplicationController {
         // Return the name of the Thymeleaf template for rendering
         return "recruiter";
     }
-
-
-
 
     /**
      * Retrieves the competence profile with the specified profile ID and prepares the update status page.
@@ -292,6 +290,7 @@ public class ApplicationController {
                 competenceProfile.setPerson(principal.getPerson());
                 competenceProfile.setCompetence(competence);
                 competenceProfile.setYearsOfExperience(competenceService.combineExperience(yearsOfExperience, monthOfExperience));
+                competenceProfile.setStatus("unhandled");
 
                 // Save the CompetenceProfile object
                 competenceProfileService.saveCompetenceProfile(competenceProfile);
@@ -310,4 +309,21 @@ public class ApplicationController {
             return "redirect:/error";
         }
     }
+
+    /**
+     * Retrieves the competence profiles representing the status of an applicant.
+     *
+     * @param model the Spring MVC model to which the competence profiles will be added
+     * @return the name of the Thymeleaf template used to display the applicant status
+     */
+    @GetMapping("/applicant/status")
+    public String viewApplicantStatus(Model model) {
+        // Call the service method to retrieve the list of competence profiles
+        List<CompetenceProfile> profiles = applyService.getApplicantStatuses();
+        // Add the list of competence profiles to the model
+        model.addAttribute("profiles", profiles);
+        return "applicantStatus"; // Return the name of the Thymeleaf template
+    }
+
+
 }
