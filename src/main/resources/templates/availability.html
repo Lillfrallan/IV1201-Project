@@ -18,35 +18,45 @@
 </head>
 <body>
 <header th:replace="~{../static/fragments/applicantHeader :: header}"></header>
-<main class="container mt-5">
-<h2>Add Availability</h2>
-<form th:action="@{/availability}" method="post">
-    <div th:if="${error}" class="error-message">
-        <p th:text="${error}"></p>
+<section class="d-flex justify-content-center align-items-center tex" style="height: 85vh;">
+    <div class="container shadow p-4 bg-white rounded text" style="width: 700px;">
+        <main class="container mt-5">
+            <h2>Add Availability</h2>
+                <hr class="hr hr-blurry">
+                <form th:action="@{/availability}" method="post">
+                    <div th:if="${error}" class="alert alert-danger" role="alert">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <!-- Display success message -->
+                    <div th:if="${success}" class="alert alert-success" role="alert">
+                     <strong th:text="${success}"></strong>
+                    </div>
+                    <!-- Add new availability periods -->
+                    <div class="form-group row text-center">
+                        <label class="col-sm-2 col-form-label"><strong>From Date</strong></label>
+                        <div class="col-sm-10">
+                            <input type="date" name="fromDate" id="fromDate" required />
+                        </div>
+                    </div>
+                    <hr class="hr hr-blurry">
+                    <div class="form-group row text-center">
+                        <label class="col-sm-2 col-form-label"><strong>To Date</strong></label>
+                        <div class="col-sm-10">
+                            <input type="date" name="toDate" id="toDate" required />
+                        </div>
+                    </div>
+                    <hr class="hr hr-blurry">
+                    <!-- Button to add a new availability period -->
+                    <div class="d-grid gap-2 d-md-block text-center">
+                        <button type="submit" class="btn btn-primary" value="true">Add Availability</button>
+                        <a href="/applicant/status">
+                            <button type="button" class="btn btn-secondary" >My Status</button>
+                        </a>
+                    </div>
+             </form>
+        </main>
     </div>
-
-    <!-- Display success message -->
-    <div th:if="${success}" class="success-message">
-        <p th:text="${success}"></p>
-    </div>
-    <!-- Add new availability periods -->
-    <label>From Date:</label>
-    <label>
-        <input type="date" name="fromDate" id="fromDate" required />
-    </label>
-
-    <label>To Date:</label>
-    <label>
-        <input type="date" name="toDate" id="toDate" required />
-    </label>
-
-    <!-- Button to add a new availability period -->
-    <button type="submit" name="addAvailability" value="true">Add Availability</button>
-
-    <br/>
-
-</form>
-</main>
+</section>
 <footer th:replace="~{../static/fragments/footer :: footer}"></footer>
 </body>
 </html>

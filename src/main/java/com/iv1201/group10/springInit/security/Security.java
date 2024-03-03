@@ -30,7 +30,7 @@ public class Security {
                 (requests ->
                         requests.requestMatchers("/register").permitAll()
                                 .requestMatchers("/recruiter", "/updateStatus", "/status").hasRole("recruiter")
-                                .requestMatchers("/competence", "/availability").hasRole("applicant")
+                                .requestMatchers("/competence", "/availability", "/applicant/status").hasRole("applicant")
                                 .anyRequest().authenticated()))
                 .formLogin((form) ->
                         form.loginPage("/login").permitAll()
