@@ -4,6 +4,8 @@ import com.iv1201.group10.springInit.entity.Competence;
 import com.iv1201.group10.springInit.repository.CompetenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -12,6 +14,7 @@ import java.util.Optional;
  * Service class for managing Competence entities.
  */
 @Service
+@Transactional
 public class CompetenceService implements com.iv1201.group10.springInit.Service.interfaces.CompetenceService {
 
     @Autowired

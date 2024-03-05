@@ -6,6 +6,7 @@ import com.iv1201.group10.springInit.repository.CompetenceProfileRepository;
 import com.iv1201.group10.springInit.repository.CompetenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
  * Service class for managing recruitment-related operations.
  */
 @Service
+@Transactional
 public class RecruitmentService {
 
     @Autowired
