@@ -17,6 +17,7 @@
 
 <p><samp>-Version control (Git)
 -Project management (Maven)
+-Intelij(recommeded)
 -Cloud runtime (Heroku)</samp></p>
 
 <h3><samp>⇁ Frameworks</samp></h3>
