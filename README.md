@@ -9,6 +9,12 @@
 
 <p><samp>The amusement park is gearing up for the upcoming season and expects around 15,000 applications within a two-week period. The existing application, while functional, lacks stability and has unresolved bugs. Consultants have been brought in to fix these issues, but the company recognizes the need for a new, upgraded system that can accommodate future requirements.</samp></p>
 
+<h3><samp>⇁ Tools</samp></h3>
+
+<p><samp>-Version control (Git)
+-Project management (Maven)
+-Cloud runtime (Heroku)</samp></p>
+
 <h3><samp>⇁ System Overview</samp></h3>
 
 <p><samp>The recruitment system serves two main user roles: applicants and recruiters. Applicants can register and submit job applications, while recruiters manage and review these applications. The system is divided into two main parts: the registration of job applications and the administration of applications.</samp></p>
