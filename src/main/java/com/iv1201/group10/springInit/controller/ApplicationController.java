@@ -63,18 +63,22 @@ public class ApplicationController {
      * @param person The person object representing the user registration.
      * @param result The binding result for validation.
      * @return The redirection URL after successful registration or the registration form if there are errors.
-     * @throws UserAlreadyExistException if the user already exists.
      */
     @PostMapping("/register")
-    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result, Model model) throws UserAlreadyExistException {
+    public String retrieveRegisterPage(@ModelAttribute("person") @Valid Person person, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("person", person);
             model.addAttribute("errors", result.getAllErrors()); // Add all errors to the model
             return "/register";
-        } else {
-            registrationService.saveUser(person);
-            return "redirect:/login";
         }
+        try {
+            registrationService.saveUser(person);
+        } catch (UserAlreadyExistException e) {
+            result.rejectValue(e.getFieldName(), "error.user.alreadyExist", e.getMessage());
+            model.addAttribute("person", person);
+            return "/register";
+        }
+        return "redirect:/login";
     }
 
     /**
