@@ -53,8 +53,28 @@
 <h4><samp>Requirements</samp></h4>
 <p><samp>A running database is required for the application to run properly. One simple way, also the implementation used by the group for testing database interactions and functionalities, is to run a postgres database locally.</samp></p>
 
+<p><samp>When having a running database the follwing lines in</samp></p>
+
+`application.properties`
+
+<p><samp>for connecting to the database with a running app</samp></p>
+
+`spring.datasource.url=jdbc:postgresql://{HOST NAME}:{PORT NUMBER}/{DATABASE NAME}`
+
+`spring.datasource.username={USER NAME}`
+
+`spring.datasource.password={PASSWORD}`
+
+
 <h4><samp>Recommendations</samp></h4>
 <p><samp>For running the app locally, IntelliJ Ultimate is recommended since development was solely made on this IDE. Run the application by clicking the green play button on IntelliJ</samp></p>
 <p><samp><b>Note:</b> Make sure "HireMeApplication" is selected before running the app.</samp></p>
+
+### OR
+
+<p><samp>Navigate to the root folder in your terminal of the project and start the application with the command</samp></p>
+`mvn spring-boot:run`
+<p><samp>The application can now be reached at the url:</samp></p>
+`http://localhost:8080/login`
 
 <p><samp>For database management, IntelliJ Ultimate provides support for connection to a database locally (or remotely) and altering data for simple testing of data value dependent functionalities such as being an applicant or a recruiter. A local database is recommended since other hidden requirements might apply with a remote database.</samp></p>
