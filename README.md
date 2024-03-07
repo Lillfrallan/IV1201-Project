@@ -15,6 +15,14 @@
 -Project management (Maven)
 -Cloud runtime (Heroku)</samp></p>
 
+<h3><samp>⇁ Frameworks</samp></h3>
+
+<p><samp>-Spring core technologies, in particular the IoC container
+-Spring Boot
+-Spring Web MVC
+-Thymeleaf
+-Spring Data (Commons and JPA)</samp></p>
+
 <h3><samp>⇁ System Overview</samp></h3>
 
 <p><samp>The recruitment system serves two main user roles: applicants and recruiters. Applicants can register and submit job applications, while recruiters manage and review these applications. The system is divided into two main parts: the registration of job applications and the administration of applications.</samp></p>
