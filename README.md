@@ -73,8 +73,8 @@
 ### OR
 
 <p><samp>Navigate to the root folder in your terminal of the project and start the application with the command</samp></p>
-`mvn spring-boot:run`
+mvn spring-boot:run
 <p><samp>The application can now be reached at the url:</samp></p>
-`http://localhost:8080/login`
+http://localhost:8080/login
 
 <p><samp>For database management, IntelliJ Ultimate provides support for connection to a database locally (or remotely) and altering data for simple testing of data value dependent functionalities such as being an applicant or a recruiter. A local database is recommended since other hidden requirements might apply with a remote database.</samp></p>
